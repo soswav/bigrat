@@ -1,3 +1,4 @@
+![](https://bigrat.monster/media/bigrat.jpg)
 ## bigrat
 repository for the poorly coded discord bot, big rat
 
