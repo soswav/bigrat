@@ -19,3 +19,5 @@ then run
 uh, here's a shortcut if you use linux: `cd ~/ && curl -O https://raw.githubusercontent.com/soswav/bigrat/main/bot.py && nano ~/bot.py`
 
 github.com/wascertified is the COWOWENR!!! PROPS TO EM'! also thanks really much dud!
+
+note: read the stuff with the "#" on the beginnig as they can be helpful if you're as clueless as me!
