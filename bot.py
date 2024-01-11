@@ -8,7 +8,7 @@ def load_config(file_path):
         config = json.load(config_file)
     return config
 
-config = load_config('config.json')
+config = load_config('config.json') # NOTE! the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
 
 TOKEN = config['token']
 PREFIX = config['prefix']
