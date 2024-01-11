@@ -3,10 +3,18 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 logging.basicConfig(level=logging.INFO)
 
-TOKEN = 'token'
+def load_config(file_path):
+    with open(file_path, 'r') as config_file:
+        config = json.load(config_file)
+    return config
 
-bot = commands.Bot(command_prefix=",", case_insensitive=False,
-               intents = discord.Intents.all())
+config = load_config('config.json')
+
+TOKEN = config['token']
+PREFIX = config['prefix']
+
+bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
+                   intents=discord.Intents.all())
 bot.remove_command("help")
 
 @bot.command(aliases=['p'])
