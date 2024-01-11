@@ -3,7 +3,7 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 logging.basicConfig(level=logging.INFO)
 
-TOKEN = 'MTE4Njc5OTAzMjg5OTc0MzgzNQ.Gh3m2O.O5e70xGk63Jta3IdRfR9HdGfXNIZnp-mDGxLwo'
+TOKEN = 'token'
 
 bot = commands.Bot(command_prefix=",", case_insensitive=False,
                intents = discord.Intents.all())
