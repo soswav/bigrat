@@ -12,6 +12,7 @@ config = load_config('config.json') # the "config.json" isnide the curvy things 
 
 TOKEN = config['token']
 PREFIX = config['prefix']
+OWNER = config['owner']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
