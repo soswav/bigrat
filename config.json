@@ -1,4 +1,5 @@
 {
-    "token": "token here",
-    "prefix": ","
+    "token": "token",
+    "prefix": "prefix",
+    "owner": "id of owner"
 }
