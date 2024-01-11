@@ -194,4 +194,12 @@ async def on_command_error(ctx, error):
 async def on_ready():
   print(f'logged in! {bot.user.id}')
 
-bot.run(TOKEN)
+if config is not None and 'token' in config:
+    TOKEN = config['token']
+else:
+    exit()
+
+if TOKEN:
+    bot.run(TOKEN)
+else:
+    print("no token added in the config.json file grrrr")
