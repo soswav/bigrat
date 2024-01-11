@@ -1,4 +1,4 @@
 {
-    "token": "token here", # place your bot token here, if you don't the bot will be dead foreevr!
-    "prefix": "," # the prefix the bot uses e.g: ,ping
+    "token": "token here",
+    "prefix": ","
 }
