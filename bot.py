@@ -60,8 +60,9 @@ async def serverinfo(ctx):
     except Exception as e:
         print(f"error: {e}")
         await ctx.send("eerererer eerer occured")
-
-# @bot.command() # for running this command you need the "waybackurls" package from blackarch linux, this bot may be mostly ran by windows users so i think it's better to leave it disabled (if you can, you can remake it and make it not use waybackurls!)
+        
+# for running this command you need the "waybackurls" package from blackarch linux, this bot may be mostly ran by windows users so i think it's better to leave it disabled (if you can, you can remake it and make it not use waybackurls!)
+# @bot.command()
 # async def waybackurls(ctx, url: str):
 #  try:
 #      result = subprocess.check_output(['waybackurls', url], universal_newlines=True)
