@@ -27,7 +27,7 @@ async def credits(ctx):
      f'-credits page\n\n'
      f'soda, main dumbass and owner\n'
      f'*"i learned a bit thanks to ai, that also just shows how much of a loser i am"*\n'
-     f'wawa - teaching me how to remove premade help command, showing me a cool picture of a rat (also ,serverinfo cmd)\n'
+     f'wawa - co-owner of big rat, he also showed me a cool ass rat!\n'
      f'*"you should make biggie cheese as the <@1186799032899743835> profile pcitur"* followed by a image of the rat mentioned\n'
      f'dem one thousand one hundred and eleven - inspiring me to make ballde clon\n'
      f'*"<:youweresaying:1193297299040911420>"*'
