@@ -1,4 +1,4 @@
-import discord, json, time, asyncio, subprocess, os, logging
+import discord, json, time, asyncio, subprocess, os, logging # stuff the bot needs to run
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 logging.basicConfig(level=logging.INFO)
@@ -61,18 +61,18 @@ async def serverinfo(ctx):
         print(f"error: {e}")
         await ctx.send("eerererer eerer occured")
 
-@bot.command()
-async def waybackurls(ctx, url: str):
-  try:
-      result = subprocess.check_output(['waybackurls', url], universal_newlines=True)
-      with open('output.txt', 'w') as f:
-          f.write(result)
-      await ctx.send(file=discord.File('output.txt'))
-  except Exception as e:
-      await ctx.send(str(e))
-  finally:
-      if os.path.exists('output.txt'):
-          os.remove('output.txt')
+# @bot.command() # for running this command you need the "waybackurls" package from blackarch linux, this bot may be mostly ran by windows users so i think it's better to leave it disabled (if you can, you can remake it and make it not use waybackurls!)
+# async def waybackurls(ctx, url: str):
+#  try:
+#      result = subprocess.check_output(['waybackurls', url], universal_newlines=True)
+#      with open('output.txt', 'w') as f:
+#          f.write(result)
+#      await ctx.send(file=discord.File('output.txt'))
+#  except Exception as e:
+#      await ctx.send(str(e))
+#  finally:
+#      if os.path.exists('output.txt'):
+#          os.remove('output.txt')
 
 @bot.command()
 @commands.guild_only()
@@ -97,7 +97,6 @@ async def h(ctx):
       f'kill - shut downs the bot 😭 (turns into idle as waning)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'userinfo - name explains itself```'
-#      f'||**please note that im still a WIP and is made of shit code <:love:1193180918165274706><:love:1193180918165274706> kk thanks**||'
   )
   await ctx.send(help_msg)
 
@@ -140,9 +139,9 @@ async def say(ctx, *, content):
 async def kill(ctx):
  if ctx.author.id == 968952481281368184:
      await ctx.send('killing myself in 3 seconds 😭😭')
-     await bot.change_presence(status=discord.Status.idle)
-     await asyncio.sleep(3)
-     await bot.close()
+     await bot.change_presence(status=discord.Status.idle) # changes status to idle
+     await asyncio.sleep(3) # change the number for how much time for it to turn off
+     await bot.close() # closes the bot
 
 @bot.command(aliases=['kk'])
 @commands.guild_only()
@@ -162,7 +161,7 @@ last_messages = {}
 
 @bot.event
 async def on_message_delete(message):
- last_messages[message.channel.id] = {'content': message.content, 'author': message.author.name}
+ last_messages[message.channel.id] = {'content': message.content, 'author': message.author.name} # logs message deleted, not shared on terminal
 
 @bot.command(aliases=['s'])
 @commands.guild_only()
@@ -177,7 +176,7 @@ async def snipe(ctx):
 async def on_guild_join(guild):
    for channel in guild.text_channels:
        if channel.permissions_for(guild.me).send_messages:
-           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`\n hi')
+           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`\n hi') # message that (should) appear once you invite it to your server
            break
 
 @bot.event
@@ -187,19 +186,19 @@ async def on_guild_join(guild):
 @bot.event
 async def on_command_error(ctx, error):
   if isinstance(error, commands.CommandOnCooldown):
-      await ctx.send(f'cooldown! {round(error.retry_after, 2)} seconds left')
+      await ctx.send(f'cooldown! {round(error.retry_after, 2)} seconds left') # used to be for the "global message" command, now removed as it sucked ass
 
 @bot.event
 async def on_command_error(ctx, error):
    logging.exception("exception occurred during command")
-   await ctx.send("error occurred while running command (may be missing argument, or it doesn't exist, *who knows?*)")
+   await ctx.send("error occurred while running command (may be missing argument, or it doesn't exist, *who knows?*)") # error message, this will get a bit annoying so its best to keep it simple
 
 
 @bot.event
 async def on_ready():
   print(f'logged in! {bot.user.id}')
 
-if config is not None and 'token' in config:
+if config is not None and 'token' in config: # checks the json for the token and runs it
     TOKEN = config['token']
 else:
     exit()
