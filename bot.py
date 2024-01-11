@@ -75,6 +75,55 @@ async def serverinfo(ctx):
 #      if os.path.exists('output.txt'):
 #          os.remove('output.txt')
 
+# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol
+
+@bot.command(name="streaming", description="Sets a streaming status")
+async def streaming(ctx, *, name):
+    if ctx.author.id != 968952481281368184:
+        return
+
+    await ctx.message.delete()
+
+    await bot.change_presence(activity=discord.Streaming(name=name, url="https://www.twitch.tv/settings"))
+
+@bot.command(name="playing", description="Sets a playing status")
+async def playing(ctx, *, name):
+    if ctx.author.id != 968952481281368184:
+        return
+
+    await ctx.message.delete()
+
+    await bot.change_presence(activity=discord.Game(name=name))
+
+@bot.command(name="watching", description="Sets a watching status")
+async def watching(ctx, *, name):
+    if ctx.author.id != 968952481281368184:
+        return
+
+    await ctx.message.delete()
+
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=name))
+
+@bot.command(name="listening", description="Sets a listening status")
+async def listening(ctx, *, name):
+    if ctx.author.id != 968952481281368184:
+        return
+
+    await ctx.message.delete()
+
+    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=name))
+
+@bot.command(name="stop", description="Stops the self bots status")
+async def stop(ctx):
+    if ctx.author.id != 968952481281368184:
+        return
+
+    await ctx.message.delete()
+
+    await bot.change_presence(activity=None)
+
+# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol
+
 @bot.command()
 @commands.guild_only()
 @commands.has_permissions(manage_channels=True)
