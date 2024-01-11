@@ -28,12 +28,8 @@ async def credits(ctx):
   await ctx.send(credits_msg)
 
 @bot.command(aliases=['sinfo', 'si'], description='Displays information about the server')
+@commands.guild_only()
 async def serverinfo(ctx):
-    try:
-        server = ctx.guild
-        if server is None:
-            await ctx.send('cmd msut be ran in sevrer')
-            return
 
         msg = (
             f'``` - srvr info - {server.name}\n'
@@ -69,6 +65,7 @@ async def waybackurls(ctx, url: str):
           os.remove('output.txt')
 
 @bot.command()
+@commands.guild_only()
 @commands.has_permissions(manage_channels=True)
 async def lock(ctx):
    await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
@@ -95,6 +92,7 @@ async def h(ctx):
   await ctx.send(help_msg)
 
 @bot.command()
+@commands.guild_only()
 async def userinfo(ctx, member: discord.Member = None):
   if not member:
       member = ctx.author
@@ -102,7 +100,7 @@ async def userinfo(ctx, member: discord.Member = None):
     f'``` - usr info for {member}\n'
     f'usrnm - {member.display_name}\n'
     f'id - {member.id}\n'
-    f'joined srvr - {member.joined_at.strftime("%Y-%m-%d %H:%M:%S")}\n'
+    f'joined srvr - {member.joined_at.strftime("%Y-%m-%d %H:%M:%S")}\n' # probably bugged if not in server so we use @commands.guild_only()
     f'joined ds -{member.created_at.strftime("%Y-%m-%d %H:%M:%S")}```\n'
 
     )
@@ -110,12 +108,14 @@ async def userinfo(ctx, member: discord.Member = None):
   await ctx.send(msg)
 
 @bot.command()
+@commands.guild_only()
 @has_permissions(manage_roles=True)
 async def grole(ctx, member: discord.Member, role: discord.Role):
    await member.add_roles(role)
    await ctx.send(f'{member} was given role {role}')
 
 @bot.command()
+@commands.guild_only()
 @has_permissions(manage_messages=True)
 async def clear(ctx, amount: int):
   await ctx.channel.purge(limit=amount+1)
@@ -135,12 +135,14 @@ async def kill(ctx):
      await bot.close()
 
 @bot.command(aliases=['kk'])
+@commands.guild_only()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
    await member.kick(reason=reason)
    await ctx.send(f"`{member}` has been kick(ed)")
 
 @bot.command(aliases=['bn'])
+@commands.guild_only()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
    await member.ban(reason=reason)
@@ -153,6 +155,7 @@ async def on_message_delete(message):
  last_messages[message.channel.id] = {'content': message.content, 'author': message.author.name}
 
 @bot.command(aliases=['s'])
+@commands.guild_only()
 async def snipe(ctx):
  if ctx.channel.id in last_messages:
      last_message = last_messages[ctx.channel.id]
