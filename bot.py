@@ -19,7 +19,7 @@ async def credits(ctx):
      f'-credits page\n\n'
      f'soda, main dumbass and owner\n'
      f'*"i learned a bit thanks to ai, that also just shows how much of a loser i am"*\n'
-     f'wawa - teaching me how to remove premade help command, showing me a cool picture of a rat (also ,si cmd)\n'
+     f'wawa - teaching me how to remove premade help command, showing me a cool picture of a rat (also ,serverinfo cmd)\n'
      f'*"you should make biggie cheese as the <@1186799032899743835> profile pcitur"* followed by a image of the rat mentioned\n'
      f'dem one thousand one hundred and eleven - inspiring me to make ballde clon\n'
      f'*"<:youweresaying:1193297299040911420>"*'
@@ -169,7 +169,7 @@ async def snipe(ctx):
 async def on_guild_join(guild):
    for channel in guild.text_channels:
        if channel.permissions_for(guild.me).send_messages:
-           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `bg,`\n hi')
+           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`\n hi')
            break
 
 @bot.event
