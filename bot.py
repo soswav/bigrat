@@ -8,7 +8,7 @@ def load_config(file_path):
         config = json.load(config_file)
     return config
 
-config = load_config('config.json') # NOTE! the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
+config = load_config('config.json') # the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -79,7 +79,7 @@ async def serverinfo(ctx):
 
 @bot.command(name="streaming", description="Sets a streaming status")
 async def streaming(ctx, *, name):
-    if ctx.author.id != 968952481281368184:
+    if ctx.author.id != OWNER:
         return
 
     await ctx.message.delete()
@@ -88,7 +88,7 @@ async def streaming(ctx, *, name):
 
 @bot.command(name="playing", description="Sets a playing status")
 async def playing(ctx, *, name):
-    if ctx.author.id != 968952481281368184:
+    if ctx.author.id != OWNER:
         return
 
     await ctx.message.delete()
@@ -97,7 +97,7 @@ async def playing(ctx, *, name):
 
 @bot.command(name="watching", description="Sets a watching status")
 async def watching(ctx, *, name):
-    if ctx.author.id != 968952481281368184:
+    if ctx.author.id != OWNER:
         return
 
     await ctx.message.delete()
@@ -106,7 +106,7 @@ async def watching(ctx, *, name):
 
 @bot.command(name="listening", description="Sets a listening status")
 async def listening(ctx, *, name):
-    if ctx.author.id != 968952481281368184:
+    if ctx.author.id != OWNER:
         return
 
     await ctx.message.delete()
@@ -115,7 +115,7 @@ async def listening(ctx, *, name):
 
 @bot.command(name="stop", description="Stops the self bots status")
 async def stop(ctx):
-    if ctx.author.id != 968952481281368184:
+    if ctx.author.id != OWNER:
         return
 
     await ctx.message.delete()
@@ -187,7 +187,7 @@ async def say(ctx, *, content):
 
 @bot.command()
 async def kill(ctx):
- if ctx.author.id == 968952481281368184:
+ if ctx.author.id == OWNER:
      await ctx.send('killing myself in 3 seconds 😭😭')
      await bot.change_presence(status=discord.Status.idle) # changes status to idle
      await asyncio.sleep(3) # change the number for how much time for it to turn off
