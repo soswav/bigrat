@@ -17,3 +17,5 @@ then run
 (you will also need to download stuff with pip) 
 
 uh, here's a shortcut if you use linux: `cd ~/ && curl -O https://raw.githubusercontent.com/soswav/bigrat/main/bot.py && nano ~/bot.py`
+
+github.com/wascertified is the COWOWENR!!! PROPS TO EM'! also thanks really much dud!
