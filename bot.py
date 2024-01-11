@@ -30,6 +30,8 @@ async def credits(ctx):
 @bot.command(aliases=['sinfo', 'si'], description='Displays information about the server')
 @commands.guild_only()
 async def serverinfo(ctx):
+    try:
+        server = ctx.guild
 
         msg = (
             f'``` - srvr info - {server.name}\n'
