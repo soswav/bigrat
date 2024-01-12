@@ -9,19 +9,13 @@ import os
 import json
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
-import time
-import asyncio
-import subprocess
-import os
-import json
-import logging
 
 def load_config(file_path):
   with open(file_path, 'r') as config_file:
     config = json.load(config_file)
   return config
 
-config = load_config('config.json')
+config = load_config('config.json')  # you may need to change "config.json" on this line to the path of your json file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -29,7 +23,7 @@ OWNER = config['owner']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
-bot.remove_command("help")
+bot.remove_command("help") # removes prebuilt help command
 
 @bot.command(aliases=['p'])
 async def ping(ctx):
@@ -186,9 +180,10 @@ async def kill(ctx):
     if str(ctx.author.id) != OWNER:
         return
 
-    await ctx.send('shutting down in 3 seconds... 😭')
-    await bot.change_presence(status=discord.Status.idle)
-    await bot.close()
+    await ctx.send('shutting down in 3 seconds... 😭') # messGGAE that bot saays before dying
+    await bot.change_presence(status=discord.Status.idle) # changes status to idle as warning
+    await asyncio.sleep(3) # change the number for how much time for it to turn off
+    await bot.close() # kills the bot!
   
 @bot.command(aliases=['kk'])
 @commands.guild_only()
