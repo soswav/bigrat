@@ -105,7 +105,7 @@ async def listening(ctx, *, name):
 
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=name))
 
-@bot.command(name="stop", description="Stops the self bots status")
+@bot.command(name="stop", description="Stops the bots status")
 async def stop(ctx):
     if ctx.author.id != OWNER:
         return
