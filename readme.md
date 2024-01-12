@@ -5,9 +5,7 @@ repository for the poorly coded discord bot, big rat
 the bot currently has like 13 commands? i don't know
 you can fork this uh thing and probably enhance it, i don't really mind
 
-wanna host the bot?
-
-go to the wiki!
+wanna host the bot? go to the [wiki](https://github.com/soswav/bigrat/wiki) tab!
 
 github.com/wascertified is the COWOWENR!!! PROPS TO EM'! also thanks really much dud!
 
