@@ -158,6 +158,7 @@ async def kill(ctx):
 
     await ctx.send('shutting down in 3 seconds... 😭') # messGGAE that bot saays before dying
     await bot.change_presence(status=discord.Status.idle) # changes status to idle as warning
+    await asyncio.sleep(3) # change the number for how much time for it to turn off
     await bot.close() # kills the bot!
 
 @bot.command(aliases=['kk'])
