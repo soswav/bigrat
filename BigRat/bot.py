@@ -15,7 +15,7 @@ def load_config(file_path):
     config = json.load(config_file)
   return config
 
-config = load_config('config.json')
+config = load_config('config.json') # you may need to change "config.json" on this line to the path of your json file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -23,7 +23,7 @@ OWNER = config['owner']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
-bot.remove_command("help")
+bot.remove_command("help") # removes prebuilt help command
 
 async def loadcogs():
   for filename in os.listdir('./cogs'):
