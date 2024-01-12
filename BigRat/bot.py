@@ -9,11 +9,6 @@ import os
 import json
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
-import time
-import asyncio
-import subprocess
-import os
-import json
 
 def load_config(file_path):
   with open(file_path, 'r') as config_file:
