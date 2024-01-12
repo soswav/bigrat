@@ -95,7 +95,7 @@ async def h(ctx):
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
       f'credits - credits for commands n shit \n'
-      f'help, hello, h - help page'
+      f'help, hello, h - help page\n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
 #      f'waybackurls - returns wayback urls from the url provided\n'
       f'lock - locks channel, requires manage_channels\n'
