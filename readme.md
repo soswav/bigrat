@@ -7,22 +7,19 @@ you can fork this uh thing and probably enhance it, i don't really mind
 
 wanna host the bot?
 
-jsut clone the `bot.py` file and edit it to your needs, but first you need to config ur bot in the config.json file
+go to https://soswav/bigrat then click "Code" then "download zip"!!!
 
 
 
-the bot will log the guilds it has been invited to by default, you can disable thhat! jsut remove the lines that log that stuff and youre done!
+
 
 then run 
 
 `python /path/to/file.py` and it turns on the bot
 
-(you will also need to download stuff with pip) 
+(you will also need to download stuff with pip, it should be on the bot.py file) 
 
-uh, here's a shortcut if you use linux: `cd ~/ && curl -O https://raw.githubusercontent.com/soswav/bigrat/main/bot.py && nano ~/bot.py`
 
 github.com/wascertified is the COWOWENR!!! PROPS TO EM'! also thanks really much dud!
 
 note: read the stuff with the "#" on the beginnig as they can be helpful if you're as clueless as me!
-
-this truely is the *silliest* thing ever
