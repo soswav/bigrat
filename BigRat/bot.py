@@ -4,6 +4,7 @@
 import discord, json, time, asyncio, subprocess, os
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
+from statuses import StatusCog
 
 def load_config(file_path):
     with open(file_path, 'r') as config_file:
@@ -19,6 +20,7 @@ OWNER = config['owner']
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
 bot.remove_command("help")
+bot.add_cog(StatusCog(bot))
 
 @bot.command(aliases=['p'])
 async def ping(ctx):
@@ -77,45 +79,6 @@ async def serverinfo(ctx):
 #  finally:
 #      if os.path.exists('output.txt'):
 #          os.remove('output.txt')
-
-# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol | currently doesn't work, wower
-
-@bot.command(name="streaming", description="Sets a streaming status")
-async def streaming(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Streaming(name=name, url="https://www.twitch.tv/settings"))
-
-@bot.command(name="playing", description="Sets a playing status")
-async def playing(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Game(name=name))
-
-@bot.command(name="watching", description="Sets a watching status")
-async def watching(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=name))
-
-@bot.command(name="listening", description="Sets a listening status")
-async def listening(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=name))
-
-@bot.command(name="stop", description="Stops the bots status")
-async def stop(ctx):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=None)
-
-# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol | currently doesn't work, wower
 
 @bot.command()
 @commands.guild_only()
