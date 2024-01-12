@@ -14,7 +14,6 @@ import asyncio
 import subprocess
 import os
 import json
-import logging
 
 def load_config(file_path):
   with open(file_path, 'r') as config_file:
@@ -199,10 +198,6 @@ async def on_guild_join(guild):
        if channel.permissions_for(guild.me).send_messages:
            await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`') # message that (should) appear once you invite it to your server
            break
-
-@bot.event
-async def on_guild_join(guild):
-  print(f'rat joined guild: {guild.id}')
 
 @bot.event
 async def on_command_error(ctx, error):
