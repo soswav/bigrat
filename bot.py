@@ -84,7 +84,7 @@ async def serverinfo(ctx):
 async def lock(ctx):
    await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
 
-@bot.command()
+@bot.command(aliases=['help', 'hello'])
 async def h(ctx):
   help_msg = (
       f'``` - help page\n\n'
@@ -95,6 +95,7 @@ async def h(ctx):
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
       f'credits - credits for commands n shit \n'
+      f'help, hello, h - help page'
       f'grole - givs a role to specified user (requires manage_roles)\n'
 #      f'waybackurls - returns wayback urls from the url provided\n'
       f'lock - locks channel, requires manage_channels\n'
