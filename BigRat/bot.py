@@ -1,17 +1,27 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows
 
-import discord, json, time, asyncio, subprocess, os
+import discord
+import time
+import asyncio
+import subprocess
+import os
+import json
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
-from statuses import StatusCog
+import time
+import asyncio
+import subprocess
+import os
+import json
+import logging
 
 def load_config(file_path):
-    with open(file_path, 'r') as config_file:
-        config = json.load(config_file)
-    return config
+  with open(file_path, 'r') as config_file:
+    config = json.load(config_file)
+  return config
 
-config = load_config('config.json') # note! the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
+config = load_config('config.json')
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -20,7 +30,12 @@ OWNER = config['owner']
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
 bot.remove_command("help")
-bot.add_cog(StatusCog(bot))
+
+async def loadcogs():
+  for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+      await bot.load_extension(f'cogs.{filename[:-3]}')
+
 
 @bot.command(aliases=['p'])
 async def ping(ctx):
