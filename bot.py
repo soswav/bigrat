@@ -230,9 +230,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_command_error(ctx, error):
-   logging.exception("exception occurred during command")
-   await ctx.send("error occurred while running command (may be missing argument, or it doesn't exist, *who knows?*)") # error message, this will get a bit annoying so its best to keep it simple
-
+    logging.exception("exception errored during command! lol:", exc_info=error)
 
 @bot.event
 async def on_ready():
