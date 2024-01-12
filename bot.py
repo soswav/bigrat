@@ -109,7 +109,7 @@ async def h(ctx):
 async def ownercmds(ctx):
     if str(ctx.author.id) != OWNER:
         return
-    await ctx.send('``` - statuses page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)```')
+    await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)```')
 @bot.command()
 @commands.guild_only()
 async def userinfo(ctx, member: discord.Member = None):
