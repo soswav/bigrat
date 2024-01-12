@@ -39,7 +39,7 @@ read -p "do you want to run the bot right now? (y/n):" choice
 case "$choice" in 
  [yY]* ) 
    echo -e "${GREEN}running bot.py...${NC}"
-   python ~/bigrat/bot.py || echo -e "${RED}no python? trying to install with pacman...${NC}" && sudo pacman -S python || clear && echo -e "${RED}didn't work, trying dnf...${NC}" && sudo dnf install python || echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install python
+   python ~/bigrat/bot.py || echo -e "${RED}no python? trying to install with pacman...${NC}" && sudo pacman -S python || echo -e "${RED}didn't work, trying dnf...${NC}" && sudo dnf install python || echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install python
    ;;
  * ) 
    echo -e "${GREEN}okay, later i guess...${NC}"
