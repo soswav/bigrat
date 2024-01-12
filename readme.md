@@ -7,18 +7,7 @@ you can fork this uh thing and probably enhance it, i don't really mind
 
 wanna host the bot?
 
-go to https://soswav/bigrat then click "Code" then "download zip"!!!
-
-
-
-
-
-then run 
-
-`python /path/to/file.py` and it turns on the bot
-
-(you will also need to download stuff with pip, it should be on the bot.py file) 
-
+go to the wiki!
 
 github.com/wascertified is the COWOWENR!!! PROPS TO EM'! also thanks really much dud!
 
