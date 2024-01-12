@@ -6,8 +6,9 @@ NC='\033[0m'
 
 clear
 
+cd ~/
 echo -e "${GREEN}cloning git repo...${NC}"
-git clone https://github.com/soswav/bigrat.git ~/ || echo -e "${RED}no git? trying to install with pacman...${NC}" && sudo pacman -S git || echo -e "${RED} didn't work, trying dnf...${NC}" && sudo dnf install git || echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install git
+git clone https://github.com/soswav/bigrat.git || echo -e "${RED}no git? trying to install with pacman...${NC}" && sudo pacman -S git || echo -e "${RED} didn't work, trying dnf...${NC}" && sudo dnf install git || echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install git
 
 echo -e "${GREEN}git clone finished! sending to cloned directory...${NC}"
 cd ~/bigrat || echo -e "${RED}fatal: destination path 'bigrat' already exists and is not an empty directory${NC}"
