@@ -1,13 +1,27 @@
-import discord, json, time, asyncio, subprocess, os # stuff the bot needs to run, you may need to install the dependencies with pip
+# stuff the bot needs to run, you may need to install the dependencies with pip
+# normally u can install them by running installer.bat if ur on windows
+
+import discord
+import time
+import asyncio
+import subprocess
+import os
+import json
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
+import time
+import asyncio
+import subprocess
+import os
+import json
+import logging
 
 def load_config(file_path):
-    with open(file_path, 'r') as config_file:
-        config = json.load(config_file)
-    return config
+  with open(file_path, 'r') as config_file:
+    config = json.load(config_file)
+  return config
 
-config = load_config('config.json') # note! the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
+config = load_config('config.json')
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -16,6 +30,12 @@ OWNER = config['owner']
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
 bot.remove_command("help")
+
+async def loadcogs():
+  for filename in os.listdir('./cogs'):
+    if filename.endswith('.py'):
+      await bot.load_extension(f'cogs.{filename[:-3]}')
+
 
 @bot.command(aliases=['p'])
 async def ping(ctx):
@@ -74,45 +94,6 @@ async def serverinfo(ctx):
 #  finally:
 #      if os.path.exists('output.txt'):
 #          os.remove('output.txt')
-
-# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol | currently doesn't work, wower
-
-@bot.command(name="streaming", description="Sets a streaming status")
-async def streaming(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Streaming(name=name, url="https://www.twitch.tv/settings"))
-
-@bot.command(name="playing", description="Sets a playing status")
-async def playing(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Game(name=name))
-
-@bot.command(name="watching", description="Sets a watching status")
-async def watching(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=name))
-
-@bot.command(name="listening", description="Sets a listening status")
-async def listening(ctx, *, name):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=name))
-
-@bot.command(name="stop", description="Stops the self bots status")
-async def stop(ctx):
-    if ctx.author.id != OWNER:
-        return
-
-    await bot.change_presence(activity=None)
-
-# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol | currently doesn't work, wower
 
 @bot.command()
 @commands.guild_only()
@@ -230,9 +211,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_command_error(ctx, error):
-   logging.exception("exception occurred during command")
-   await ctx.send("error occurred while running command (may be missing argument, or it doesn't exist, *who knows?*)") # error message, this will get a bit annoying so its best to keep it simple
-
+    logging.exception("exception errored during command! lol:", exc_info=error)
 
 @bot.event
 async def on_ready():
