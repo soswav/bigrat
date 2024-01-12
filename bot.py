@@ -1,14 +1,13 @@
-import discord, json, time, asyncio, subprocess, os, logging # stuff the bot needs to run
+import discord, json, time, asyncio, subprocess, os # stuff the bot needs to run, you may need to install the dependencies with pip
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
-logging.basicConfig(level=logging.INFO)
 
 def load_config(file_path):
     with open(file_path, 'r') as config_file:
         config = json.load(config_file)
     return config
 
-config = load_config('config.json') # the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
+config = load_config('config.json') # note! the "config.json" isnide the curvy things must be edited to the file location! e.g: C:/path/to/json.json (idfk, i don't use windows anymore)
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -23,11 +22,11 @@ async def ping(ctx):
    await ctx.send(f'pong! {round(bot.latency * 1000)}ms')
 
 @bot.command()
-async def credits(ctx):
+async def credits(ctx): # PLEASE leave wawa and i in the "credits" command, if you don't want to have the command, its okay but like 😭
   credits_msg = (
      f'-credits page\n\n'
-     f'soda, main dumbass and owner\n'
-     f'*"i learned a bit thanks to ai, that also just shows how much of a loser i am"*\n'
+     f'soda, dumbass and owner\n'
+     f'*"i learned a bit thanks to wawer, that also just shows how much of a loser i am"*\n'
      f'wawa - co-owner of big rat, he also showed me a cool ass rat!\n'
      f'*"you should make biggie cheese as the <@1186799032899743835> profile pcitur"* followed by a image of the rat mentioned\n'
      f'dem one thousand one hundred and eleven - inspiring me to make ballde clon\n'
@@ -62,7 +61,7 @@ async def serverinfo(ctx):
         print(f"error: {e}")
         await ctx.send("eerererer eerer occured")
         
-# for running this command you need the "waybackurls" package from blackarch linux, this bot may be mostly ran by windows users so i think it's better to leave it disabled (if you can, you can remake it and make it not use waybackurls!)
+# for running this command you need the "waybackurls" package from blackarch linux, this bot may be mostly ran by windows users so i think it's better to leave it disabled (if you want, and have the enough time, you can remake it and make it not use waybackurls!)
 # @bot.command()
 # async def waybackurls(ctx, url: str):
 #  try:
@@ -76,14 +75,12 @@ async def serverinfo(ctx):
 #      if os.path.exists('output.txt'):
 #          os.remove('output.txt')
 
-# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol
+# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol | currently doesn't work, wower
 
 @bot.command(name="streaming", description="Sets a streaming status")
 async def streaming(ctx, *, name):
     if ctx.author.id != OWNER:
         return
-
-    await ctx.message.delete()
 
     await bot.change_presence(activity=discord.Streaming(name=name, url="https://www.twitch.tv/settings"))
 
@@ -92,16 +89,12 @@ async def playing(ctx, *, name):
     if ctx.author.id != OWNER:
         return
 
-    await ctx.message.delete()
-
     await bot.change_presence(activity=discord.Game(name=name))
 
 @bot.command(name="watching", description="Sets a watching status")
 async def watching(ctx, *, name):
     if ctx.author.id != OWNER:
         return
-
-    await ctx.message.delete()
 
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=name))
 
@@ -110,8 +103,6 @@ async def listening(ctx, *, name):
     if ctx.author.id != OWNER:
         return
 
-    await ctx.message.delete()
-
     await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=name))
 
 @bot.command(name="stop", description="Stops the self bots status")
@@ -119,11 +110,9 @@ async def stop(ctx):
     if ctx.author.id != OWNER:
         return
 
-    await ctx.message.delete()
-
     await bot.change_presence(activity=None)
 
-# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol
+# forked shit from https://github.com/wascertified/WawaSB/blob/main/selfbot.py lol | currently doesn't work, wower
 
 @bot.command()
 @commands.guild_only()
@@ -143,7 +132,7 @@ async def h(ctx):
       f'snipe, s - snipes last deleted message\n'
       f'credits - credits for commands n shit \n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
-      f'waybackurls - returns wayback urls from the url provided\n'
+#      f'waybackurls - returns wayback urls from the url provided\n'
       f'lock - locks channel, requires manage_channels\n'
       f'kill - shut downs the bot 😭 (turns into idle as waning)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
@@ -188,7 +177,7 @@ async def say(ctx, *, content):
 
 @bot.command()
 async def kill(ctx):
- if ctx.author.id == OWNER:
+  if ctx.author.id != OWNER:
      await ctx.send('killing myself in 3 seconds 😭😭')
      await bot.change_presence(status=discord.Status.idle) # changes status to idle
      await asyncio.sleep(3) # change the number for how much time for it to turn off
@@ -227,7 +216,7 @@ async def snipe(ctx):
 async def on_guild_join(guild):
    for channel in guild.text_channels:
        if channel.permissions_for(guild.me).send_messages:
-           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`\n hi') # message that (should) appear once you invite it to your server
+           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`') # message that (should) appear once you invite it to your server
            break
 
 @bot.event
