@@ -152,11 +152,13 @@ async def say(ctx, *, content):
 
 @bot.command()
 async def kill(ctx):
-  if ctx.author.id != OWNER:
-     await ctx.send('killing myself in 3 seconds 😭😭')
-     await bot.change_presence(status=discord.Status.idle) # changes status to idle
-     await asyncio.sleep(3) # change the number for how much time for it to turn off
-     await bot.close() # closes the bot
+    """Shuts down the bot with a 3-second delay if the author is the owner."""
+    if str(ctx.author.id) != OWNER:
+        return
+
+    await ctx.send('shutting down in 3 seconds... 😭') # messGGAE that bot saays before dying
+    await bot.change_presence(status=discord.Status.idle) # changes status to idle as warning
+    await bot.close() # kills the bot!
 
 @bot.command(aliases=['kk'])
 @commands.guild_only()
