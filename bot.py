@@ -1,4 +1,7 @@
-import discord, json, time, asyncio, subprocess, os # stuff the bot needs to run, you may need to install the dependencies with pip
+# stuff the bot needs to run, you may need to install the dependencies with pip
+# normally u can install them by running installer.bat if ur on windows
+
+import discord, json, time, asyncio, subprocess, os
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
@@ -230,9 +233,7 @@ async def on_command_error(ctx, error):
 
 @bot.event
 async def on_command_error(ctx, error):
-   logging.exception("exception occurred during command")
-   await ctx.send("error occurred while running command (may be missing argument, or it doesn't exist, *who knows?*)") # error message, this will get a bit annoying so its best to keep it simple
-
+    logging.exception("exception errored during command! lol:", exc_info=error)
 
 @bot.event
 async def on_ready():
