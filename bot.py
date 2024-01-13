@@ -1,5 +1,5 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
-# normally u can install them by running installer.bat if ur on windows
+# normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
 
 import discord, time, asyncio, subprocess, os, json, logging
 from discord.ext import commands
@@ -110,6 +110,7 @@ async def ownercmds(ctx):
     if str(ctx.author.id) != OWNER:
         return
     await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)```')
+
 @bot.command()
 @commands.guild_only()
 async def userinfo(ctx, member: discord.Member = None):
@@ -121,9 +122,7 @@ async def userinfo(ctx, member: discord.Member = None):
     f'id - {member.id}\n'
     f'joined srvr - {member.joined_at.strftime("%Y-%m-%d %H:%M:%S")}\n' # probably bugged if not in server so we use @commands.guild_only()
     f'joined ds -{member.created_at.strftime("%Y-%m-%d %H:%M:%S")}```\n'
-
     )
-
   await ctx.send(msg)
 
 @bot.command()
@@ -221,10 +220,6 @@ async def on_guild_join(guild):
        if channel.permissions_for(guild.me).send_messages:
            await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`') # message that (should) appear once you invite it to your server
            break
-
-@bot.event
-async def on_guild_join(guild):
-  print(f'rat joined guild: {guild.id}')
 
 @bot.event
 async def on_command_error(ctx, error):
