@@ -146,31 +146,41 @@ async def say(ctx, *, content):
 async def playing(ctx, *, status: str):
     if str(ctx.author.id) == OWNER:
         await bot.change_presence(activity=discord.Game(name=f"{status}"))
-    await ctx.send("set th playing status to " + status)
+        await ctx.send("set the playing status to " + status)
+    else:
+        await ctx.send("yuo dont have perms to do that!")
 
 @bot.command(name="streaming", description="Changes the streaming status of the bot")
 async def streaming(ctx, *, status: str):
     if str(ctx.author.id) == OWNER:
         await bot.change_presence(activity=discord.Streaming(name=f"{status}", url="https://www.twitch.tv/settings"))
-    await ctx.send("set th streaming status to " + status)
+        await ctx.send("set th streaming status to " + status)
+    else:
+        await ctx.send("yuo dont have perms to do that!")
 
 @bot.command(name="listening", description="Changes the listening status of the bot")
 async def listening(ctx, *, status: str):
     if str(ctx.author.id) == OWNER:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{status}"))
-    await ctx.send("set th listening status to " + status)
+        await ctx.send("set th listening status to " + status)
+    else:
+        await ctx.send("yuo dont have perms to do that!")
 
 @bot.command(name="watching", description="Changes the watching status of the bot")
 async def watching(ctx, *, status: str):
     if str(ctx.author.id) == OWNER:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{status}"))
-    await ctx.send("set th watching status to " + status)
+        await ctx.send("set th watching status to " + status)
+    else:
+        await ctx.send("yuo dont have perms to do that!")
 
 @bot.command(name="stopstatus", description="Stops the status")
 async def stopstatus(ctx):
     if str(ctx.author.id) == OWNER:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=""))
-    await ctx.send("stopped the status lol!")
+        await ctx.send("stopped the status lol!")
+    else:
+        await ctx.send("yuo dont have perms to do that!")
 
 @bot.command()
 async def kill(ctx):
