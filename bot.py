@@ -27,13 +27,11 @@ async def ping(ctx):
 @bot.command()
 async def credits(ctx): # PLEASE leave wawa and i in the "credits" command, if you don't want to have the command, its okay but like 😭
   credits_msg = (
-     f'-credits page\n\n'
+     f'``` - credits page\n\n'
      f'soda, dumbass and owner\n'
-     f'*"i learned a bit thanks to wawer, that also just shows how much of a loser i am"*\n'
-     f'wawa - co-owner of big rat, he also showed me a cool ass rat!\n'
-     f'*"you should make biggie cheese as the <@1186799032899743835> profile pcitur"* followed by a image of the rat mentioned\n'
-     f'dem one thousand one hundred and eleven - inspiring me to make ballde clon\n'
-     f'*"<:youweresaying:1193297299040911420>"*'
+     f'"i learned a bit thanks to wawer"\n'
+     f'wawa - co-owner of big rat, has made like 30%~ of the bot\n'
+     f'"you should make biggie cheese as the big rat profile pcitur" then a image of the rat mentioned```'
   )
 
   await ctx.send(credits_msg)
