@@ -105,9 +105,11 @@ async def h(ctx):
 
 @bot.command(aliases=['ocmd'])
 async def ownercmds(ctx):
-    if str(ctx.author.id) != OWNER:
-        return
-    await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)```')
+    if str(ctx.author.id) in OWNER:
+        await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)```')
+    else:
+        await ctx.send('yuo dont have perms to do that!')
+
 
 @bot.command()
 @commands.guild_only()
@@ -144,7 +146,7 @@ async def say(ctx, *, content):
 
 @bot.command(name="playing", description="Changes the playing status of the bot")
 async def playing(ctx, *, status: str):
-    if str(ctx.author.id) == OWNER:
+    if str(ctx.author.id) in OWNER:
         await bot.change_presence(activity=discord.Game(name=f"{status}"))
         await ctx.send("set the playing status to " + status)
     else:
@@ -152,7 +154,7 @@ async def playing(ctx, *, status: str):
 
 @bot.command(name="streaming", description="Changes the streaming status of the bot")
 async def streaming(ctx, *, status: str):
-    if str(ctx.author.id) == OWNER:
+    if str(ctx.author.id) in OWNER:
         await bot.change_presence(activity=discord.Streaming(name=f"{status}", url="https://www.twitch.tv/settings"))
         await ctx.send("set th streaming status to " + status)
     else:
@@ -160,7 +162,7 @@ async def streaming(ctx, *, status: str):
 
 @bot.command(name="listening", description="Changes the listening status of the bot")
 async def listening(ctx, *, status: str):
-    if str(ctx.author.id) == OWNER:
+    if str(ctx.author.id) in OWNER:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{status}"))
         await ctx.send("set th listening status to " + status)
     else:
@@ -168,7 +170,7 @@ async def listening(ctx, *, status: str):
 
 @bot.command(name="watching", description="Changes the watching status of the bot")
 async def watching(ctx, *, status: str):
-    if str(ctx.author.id) == OWNER:
+    if str(ctx.author.id) in OWNER:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{status}"))
         await ctx.send("set th watching status to " + status)
     else:
@@ -176,7 +178,7 @@ async def watching(ctx, *, status: str):
 
 @bot.command(name="stopstatus", description="Stops the status")
 async def stopstatus(ctx):
-    if str(ctx.author.id) == OWNER:
+    if str(ctx.author.id) in OWNER:
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=""))
         await ctx.send("stopped the status lol!")
     else:
@@ -185,13 +187,15 @@ async def stopstatus(ctx):
 @bot.command()
 async def kill(ctx):
     """Shuts down the bot with a 3-second delay if the author is the owner."""
-    if str(ctx.author.id) != OWNER:
+    if str(ctx.author.id) not in OWNER:
+        await ctx.send("yuo dont have perms to do that!")
         return
 
-    await ctx.send('shutting down in 3 seconds... 😭') # messGGAE that bot saays before dying
-    await bot.change_presence(status=discord.Status.idle) # changes status to idle as warning
+    await ctx.send('shutting down in 3 seconds... 😭') # message that bot says before dying
+    await bot.change_presence(status=discord.Status.idle) # changes status to idle as a warning
     await asyncio.sleep(3) # change the number for how much time for it to turn off
     await bot.close() # kills the bot!
+
   
 @bot.command(aliases=['kk'])
 @commands.guild_only()
