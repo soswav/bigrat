@@ -23,13 +23,13 @@ sleep 2 && clear # takes two seconds then clears
 cd ~/bigrat && echo -e "${RED}folder exists, deleting with sudo${NC}" && sudo rm -r ~/bigrat/ # checks if you already installed bigrat
 cd  ~/
 echo -e "${GREEN}cloning git repo...${NC}"
-git clone https://github.com/soswav/bigrat.git || (echo -e "${RED}no git? trying to install with pacman...${NC}" && sudo pacman -S git && echo -e "${GREEEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying dnf...${NC}" && sudo dnf install git && echo -e "${GREEEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install git && echo -e "${GREEEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git)
+git clone https://github.com/soswav/bigrat.git || (echo -e "${RED}no git? trying to install with pacman...${NC}" && sudo pacman -S git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying dnf...${NC}" && sudo dnf install git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git)
 
 echo -e "${GREEN}git clone finished! sending to directory...${NC}"
 cd ~/bigrat # sends to directory
 
 echo -e "${GREEN}installing bot requirements with pip...${NC}" && sleep 3
-pip install discord.py requests PyYAML
+pip install discord requests PyYAML
 
 echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}"
 sleep 5
