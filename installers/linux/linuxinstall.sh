@@ -29,7 +29,7 @@ echo -e "${GREEN}git clone finished! sending to directory...${NC}"
 cd ~/bigrat # sends to directory
 
 echo -e "${GREEN}installing bot requirements with pip...${NC}" && sleep 3
-pip install discord.py requests PyYAML || echo -e "didn't work, trying with "break-system-packages" && python install discord.py requests PyYAML --break-system-packages
+pip install discord.py requests PyYAML || echo -e "didn't work, trying with break-system-packages" && python install discord.py requests PyYAML --break-system-packages
 
 echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}"
 sleep 5
