@@ -5,11 +5,11 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
 def load_config(file_path):
-   with open(file_path, 'r') as config_file:
-       config = yaml.safe_load(config_file)
-   return config
+with open(file_path, 'r') as config_file:
+   config = yaml.safe_load(config_file) # change "yaml.safe_load" to "json.load" if you want json as config
+return config
 
-config = load_config('config.yml')  # you may need to change "config.yml" to the path of your json file
+config = load_config('config.yml')  # you may need to change "config.yml" to the path of your yml file, if you want to use json read the notes above
 
 TOKEN = config['token']
 PREFIX = config['prefix']
