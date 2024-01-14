@@ -98,6 +98,7 @@ async def h(ctx):
 #      f'waybackurls - returns wayback urls from the url provided\n'
       f'lock - locks channel, requires manage_channels\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
+      f'cat - sends cat pic for u\n'
       f'userinfo - name explains itself```'
   )
   await ctx.send(help_msg)
