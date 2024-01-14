@@ -1,15 +1,15 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
-import discord, time, asyncio, subprocess, os, json, logging, requests
+import discord, time, asyncio, subprocess, os, json, logging, requests, yaml
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
 def load_config(file_path):
-  with open(file_path, 'r') as config_file:
-    config = json.load(config_file)
-  return config
+   with open(file_path, 'r') as config_file:
+       config = yaml.safe_load(config_file)
+   return config
 
-config = load_config('config.json')  # you may need to change "config.json" on this line to the path of your json file
+config = load_config('config.yml')  # you may need to change "config.yml" to the path of your json file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
