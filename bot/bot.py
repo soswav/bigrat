@@ -30,7 +30,7 @@ async def credits(ctx): # PLEASE leave wawa and i in the "credits" command, if y
      f'``` - credits page\n\n'
      f'soda, dumbass and owner\n'
      f'"i learned a bit thanks to wawer"\n'
-     f'wawa - co-owner of big rat, has made like 30%~ of the bot\n'
+     f'wawa, co-owner of big rat, has made like 30%~ of the bot\n'
      f'"you should make biggie cheese as the big rat profile pcitur" then a image of the rat mentioned```'
   )
 
