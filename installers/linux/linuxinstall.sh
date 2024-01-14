@@ -28,13 +28,13 @@ cd ~/bigrat
 
 echo -e "${GREEN}opening config.json for edit, make sure to fill the spots...${NC}"
 sleep 5
-nano config.json
+nano ~/bigrat/bot/config.json
 
 read -p "do you want to check the bot.py file? (y/n)" choice
 case "$choice" in 
  [yY]* ) 
    echo -e "${GREEN}editing bot.py with nano...${NC}"
-   nano ~/bigrat/bot.py
+   nano ~/bigrat/bot/bot.py
    ;;
  * ) 
    echo -e "${GREEN}alright, skipping...${NC}"
@@ -45,7 +45,7 @@ read -p "do you want to run the bot right now? (y/n):" choice
 case "$choice" in 
  [yY]* ) 
    echo -e "${GREEN}running bot.py...${NC}"
-   python ~/bigrat/bot.py || echo -e "${RED}no python? trying to install with pacman...${NC}" && sudo pacman -S python || echo -e "${RED}didn't work, trying dnf...${NC}" && sleep 2 && sudo dnf install python || echo -e "${RED}didn't work, trying apt...${NC}" && sleep 2 && sudo apt install python
+   python ~/bigrat/bot/bot.py || echo -e "${RED}no python? trying to install with pacman...${NC}" && sudo pacman -S python || echo -e "${RED}didn't work, trying dnf...${NC}" && sleep 2 && sudo dnf install python || echo -e "${RED}didn't work, trying apt...${NC}" && sleep 2 && sudo apt install python
    ;;
  * ) 
    echo -e "${GREEN}okay, later i guess...${NC}"
