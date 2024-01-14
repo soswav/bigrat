@@ -1,6 +1,6 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
-import discord, time, asyncio, subprocess, os, json, logging
+import discord, time, asyncio, subprocess, os, json, logging, requests
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
@@ -142,6 +142,15 @@ async def clear(ctx, amount: int):
 async def say(ctx, *, content):
   await ctx.message.delete()
   await ctx.send(content)
+
+@bot.command(name='cat')
+async def cat(ctx):
+    response = requests.get('https://api.thecatapi.com/v1/images/search')
+    data = response.json()
+
+    cat_image_url = data[0]['url']
+
+    await ctx.send(f'{cat_image_url}')
 
 @bot.command(name="playing", description="Changes the playing status of the bot")
 async def playing(ctx, *, status: str):
