@@ -5,7 +5,7 @@ from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
 def load_config(file_path):
-with open(file_path, 'r') as config_file:
+  with open(file_path, 'r') as config_file:
    config = yaml.safe_load(config_file) # change "yaml.safe_load" to "json.load" if you want json as config
 return config
 
