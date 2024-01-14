@@ -1,6 +1,5 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
-
 import discord, time, asyncio, subprocess, os, json, logging
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
