@@ -9,7 +9,7 @@ def load_config(file_path):
    config = yaml.safe_load(config_file) # change "yaml.safe_load" to "json.load" if you want json as config
  return config
 
-config = load_config('/home/sodiumpowered/Documents/rats/config.yml') # you may need to change "config.yml" to the path of your yml file, if you want to use json read the notes above
+config = load_config('config.yml') # you may need to change "config.yml" to the path of your yml file, if you want to use json read the notes above
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -106,7 +106,7 @@ async def h(ctx):
 @bot.command(aliases=['ocmd'])
 async def ownercmds(ctx):
     if str(ctx.author.id) in OWNER:
-        await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)```')
+        await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)\ndm - dms user mentioned```')
     else:
         await ctx.send('yuo dont have perms to do that!')
 
@@ -138,6 +138,12 @@ async def grole(ctx, member: discord.Member, role: discord.Role):
 async def clear(ctx, amount: int):
   await ctx.channel.purge(limit=amount+1)
   await ctx.send(f'deleted {amount} msgs for u king', delete_after=5)
+
+@bot.command(name="dm")
+async def dm(ctx, member: discord.Member, *, content):
+    if str(ctx.author.id) in OWNER:
+      await member.send(content)
+      await ctx.send(f'{member} was given sent dm with content: {content}')
 
 @bot.command()
 async def say(ctx, *, content):
@@ -255,7 +261,7 @@ async def on_command_error(ctx, error):
 async def on_ready():
   print(f'logged in! {bot.user.id}')
 
-if config is not None and 'token' in config: # checks the json for the token and runs it
+if config is not None and 'token' in config: # checks the yml for the token and runs it
     TOKEN = config['token']
 else:
     exit()
