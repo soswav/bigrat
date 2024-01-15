@@ -15,4 +15,4 @@ note: read the stuff with the "#" on the beginnig as they can be helpful if you'
 
 another note: i'm firkcing depressed ☹️
 
-[!](https://top.gg/api/widget/1186799032899743835.svg)
+![top.gg](https://top.gg/api/widget/1186799032899743835.svg)
