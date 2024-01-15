@@ -9,7 +9,7 @@ def load_config(file_path):
    config = yaml.safe_load(config_file)
  return config
 
-config = load_config('/home/sodiumpowered/Documents/rats/config.yml') # you may need to change "config.yml" to the path of your yml file
+config = load_config('config.yml') # you may need to change "config.yml" to the path of your yml file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
