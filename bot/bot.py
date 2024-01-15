@@ -15,7 +15,6 @@ TOKEN = config['token']
 PREFIX = config['prefix']
 OWNER = config['owner']
 IPINFO_TOKEN = config['ipinfo_token']
-SS_TOKEN = config['ss_token']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
@@ -96,6 +95,29 @@ async def ownercmds(ctx):
         await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)\ndm - dms user mentioned```')
     else:
         await ctx.send('currently, your id does NOT appear in the config!')
+
+@bot.command(aliases=["suggestcmd"], description="Suggest a command for the bot")
+async def suggestcommand(ctx, *, suggestion):
+    suggestion_channel = bot.get_channel(1196024059939524608)
+    embed = discord.Embed(title="new command suggestion!", description=suggestion, color=discord.Color.blurple())
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
+    await suggestion_channel.send(embed=embed)
+
+@bot.command(aliases=['ss'], description='takes a screenshot of the specified webpage.')
+async def screenshot(ctx, url: str):
+    if not url.startswith('http://') and not url.startswith('https://'):
+        url = 'http://' + url
+
+    access_key = ss_token
+    screenshot_url = f'https://api.screenshotone.com/take?url={url}&access_key={access_key}'
+
+    try:
+        embed = discord.embed(title='big rat ss', color=discord.color.white())
+        embed.set_image(url=screenshot_url)
+        await ctx.send(embed=embed)
+
+    except exception as e:
+        await ctx.send(f"an error occurred: {e}")
 
 
 @bot.command()
@@ -207,22 +229,6 @@ async def ipinfo(ctx, *, ip: str):
     except Exception as e:
         await ctx.send(f"An error occurred while fetching IP information: {e}")
 
-@bot.command(aliases=['ss'], description='Takes a screenshot of the specified webpage.')
-async def screenshot(ctx, url: str):
-    if not url.startswith('http://') and not url.startswith('https://'):
-        url = 'http://' + url
-
-    access_key = SS_TOKEN
-    screenshot_url = f'https://api.screenshotone.com/take?url={url}&access_key={access_key}'
-
-    try:
-        embed = discord.Embed(title='Big Rat SS', color=discord.Color.white())
-        embed.set_image(url=screenshot_url)
-        await ctx.send(embed=embed)
-
-    except Exception as e:
-        await ctx.send(f"An error occurred: {e}")
-  
 @bot.command(name="playing", description="Changes the playing status of the bot")
 async def playing(ctx, *, status: str):
     if str(ctx.author.id) in OWNER:
