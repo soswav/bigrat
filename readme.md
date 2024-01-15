@@ -1,3 +1,4 @@
+![top.gg](https://top.gg/api/widget/servers/1186799032899743835.svg)
 ![](https://bigrat.monster/media/bigrat.jpg)
 ## bigrat
 repository for the poorly coded discord bot, big rat
