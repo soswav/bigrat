@@ -5,6 +5,6 @@ prefix: "your prefix" # prefix for your bot e.g: ",ping"
 
 owner: "your discord id" # place you discord id here, if you want multiple do replace your id section with: ["id one", "id two"] make sure to remember the normal one
 
-ipinfo_token: "your ipinfo.io token" # LEAVE NORMAL IF U DONT WANT THE ipinfo COMMAND
+ipinfo_token: "your ipinfo.io token" # don't change if you don't want the ipinfo command
 
-ss_token: "your api.screenshotone.com token" # # LEAVE NORMAL IF U DONT WANT THE ss COMMAND
+ss_token: "your api.screenshotone.com token" # don't change if you don't want the screenshot command
