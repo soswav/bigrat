@@ -6,10 +6,10 @@ from discord.ext.commands import has_permissions, TextChannelConverter
 
 def load_config(file_path):
  with open(file_path, 'r') as config_file:
-   config = yaml.safe_load(config_file) # change "yaml.safe_load" to "json.load" if you want json as config
+   config = yaml.safe_load(config_file)
  return config
 
-config = load_config('config.yml') # you may need to change "config.yml" to the path of your yml file, if you want to use json read the notes above
+config = load_config('/home/sodiumpowered/Documents/rats/config.yml') # you may need to change "config.yml" to the path of your yml file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -35,7 +35,7 @@ async def credits(ctx): # PLEASE leave wawa and i in the "credits" command, if y
 
   await ctx.send(credits_msg)
 
-@bot.command(aliases=['sinfo', 'si'], description='Displays information about the server')
+@bot.command(aliases=['si'], description='displays info about server')
 @commands.guild_only()
 async def serverinfo(ctx):
     try:
@@ -61,41 +61,26 @@ async def serverinfo(ctx):
         print(f"error: {e}")
         await ctx.send("eerererer eerer occured")
         
-# for running this command you need the "waybackurls" package from blackarch linux, this bot may be mostly ran by windows users so i think it's better to leave it disabled (if you want, and have the enough time, you can remake it and make it not use waybackurls!)
-# @bot.command()
-# async def waybackurls(ctx, url: str):
-#  try:
-#      result = subprocess.check_output(['waybackurls', url], universal_newlines=True)
-#      with open('output.txt', 'w') as f:
-#          f.write(result)
-#      await ctx.send(file=discord.File('output.txt'))
-#  except Exception as e:
-#      await ctx.send(str(e))
-#  finally:
-#      if os.path.exists('output.txt'):
-#          os.remove('output.txt')
-
 @bot.command()
 @commands.guild_only()
 @commands.has_permissions(manage_channels=True)
 async def lock(ctx):
    await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
 
-@bot.command(aliases=['help', 'hello'])
+@bot.command(aliases=['help'])
 async def h(ctx):
   help_msg = (
       f'``` - help page\n\n'
       f'ping, p - shows the bot latency\n'
       f'say - make the bot say something\n'
       f'kk, kick - kick someone in the nuts\n'
-      f'serverinfo, si, sinfo - serverinfo, made by wawer\n'
+      f'serverinfo, si - serverinfo, made by wawer\n'
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
       f'credits - credits for commands n shit \n'
-      f'help, hello, h - help page\n'
+      f'help, h - help page\n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
       f'ownercmds, ocmd - commands list for the owner of the bot\n'
-#      f'waybackurls - returns wayback urls from the url provided\n'
       f'lock - locks channel, requires manage_channels\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
@@ -103,12 +88,12 @@ async def h(ctx):
   )
   await ctx.send(help_msg)
 
-@bot.command(aliases=['ocmd'])
+@bot.command()
 async def ownercmds(ctx):
     if str(ctx.author.id) in OWNER:
         await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)\ndm - dms user mentioned```')
     else:
-        await ctx.send('yuo dont have perms to do that!')
+        await ctx.send('currently, your id does NOT appear in the config!')
 
 
 @bot.command()
@@ -139,11 +124,15 @@ async def clear(ctx, amount: int):
   await ctx.channel.purge(limit=amount+1)
   await ctx.send(f'deleted {amount} msgs for u king', delete_after=5)
 
-@bot.command(name="dm")
+@bot.command(name="dm", description='DMs user mentioned, do NOT use for bad shit!')
+@commands.guild_only()
 async def dm(ctx, member: discord.Member, *, content):
     if str(ctx.author.id) in OWNER:
-      await member.send(content)
-      await ctx.send(f'{member} was given sent dm with content: {content}')
+        await member.send(content)
+        await ctx.send(f'{member} was given sent dm with content: {content}')
+    else:
+        await ctx.send('currently, your id does NOT appear in the config!')
+
 
 @bot.command()
 async def say(ctx, *, content):
@@ -165,7 +154,7 @@ async def playing(ctx, *, status: str):
         await bot.change_presence(activity=discord.Game(name=f"{status}"))
         await ctx.send("set the playing status to " + status)
     else:
-        await ctx.send("yuo dont have perms to do that!")
+        await ctx.send("currently, your id does NOT appear in the config!")
 
 @bot.command(name="streaming", description="Changes the streaming status of the bot")
 async def streaming(ctx, *, status: str):
@@ -173,7 +162,7 @@ async def streaming(ctx, *, status: str):
         await bot.change_presence(activity=discord.Streaming(name=f"{status}", url="https://www.twitch.tv/settings"))
         await ctx.send("set th streaming status to " + status)
     else:
-        await ctx.send("yuo dont have perms to do that!")
+        await ctx.send("currently, your id does NOT appear in the config!")
 
 @bot.command(name="listening", description="Changes the listening status of the bot")
 async def listening(ctx, *, status: str):
@@ -181,7 +170,7 @@ async def listening(ctx, *, status: str):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{status}"))
         await ctx.send("set th listening status to " + status)
     else:
-        await ctx.send("yuo dont have perms to do that!")
+        await ctx.send("currently, your id does NOT appear in the config!")
 
 @bot.command(name="watching", description="Changes the watching status of the bot")
 async def watching(ctx, *, status: str):
@@ -189,7 +178,7 @@ async def watching(ctx, *, status: str):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{status}"))
         await ctx.send("set th watching status to " + status)
     else:
-        await ctx.send("yuo dont have perms to do that!")
+        await ctx.send("currently, your id does NOT appear in the config!")
 
 @bot.command(name="stopstatus", description="Stops the status")
 async def stopstatus(ctx):
@@ -197,13 +186,13 @@ async def stopstatus(ctx):
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=""))
         await ctx.send("stopped the status lol!")
     else:
-        await ctx.send("yuo dont have perms to do that!")
+        await ctx.send("currently, your id does NOT appear in the config!")
 
 @bot.command()
 async def kill(ctx):
     """Shuts down the bot with a 3-second delay if the author is the owner."""
     if str(ctx.author.id) not in OWNER:
-        await ctx.send("yuo dont have perms to do that!")
+        await ctx.send("currently, your id does NOT appear in the config!")
         return
 
     await ctx.send('shutting down in 3 seconds... 😭') # message that bot says before dying
