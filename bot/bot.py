@@ -15,7 +15,7 @@ TOKEN = config['token']
 PREFIX = config['prefix']
 OWNER = config['owner']
 IPINFO_TOKEN = config['ipinfo_token']
-ss_token = config['ss_token']
+SS_TOKEN = config['ss_token']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
