@@ -11,6 +11,7 @@ title %title%
 echo Installing discord.py and requests...
 pip install discord.py
 pip install requests
+pip install PyYAML
 
 if %errorlevel% equ 0 (
 
