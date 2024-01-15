@@ -97,22 +97,22 @@ async def ownercmds(ctx):
     else:
         await ctx.send('currently, your id does NOT appear in the config!')
 
-@bot.command(aliases=['ss'], description='takes a screenshot of the specified webpage.')
+@bot.command(aliases=['ss'], description='takes a screenshot of the specified webpage')
 async def screenshot(ctx, url: str):
+
     if not url.startswith('http://') and not url.startswith('https://'):
         url = 'http://' + url
 
-    access_key = ss_token
+    access_key = SS_TOKEN
     screenshot_url = f'https://api.screenshotone.com/take?url={url}&access_key={access_key}'
 
     try:
-        embed = discord.embed(title='big rat ss', color=discord.color.white())
+        embed = discord.Embed(title='big rat', color=discord.Color.blurple())
         embed.set_image(url=screenshot_url)
         await ctx.send(embed=embed)
 
-    except exception as e:
-        await ctx.send(f"an error occurred: {e}")
-
+    except Exception as e:
+        await ctx.send(f"a error occurred: {e}")
 
 @bot.command()
 @commands.guild_only()
@@ -147,15 +147,9 @@ async def clear(ctx, amount: int):
 async def dm(ctx, member: discord.Member, *, content):
     if str(ctx.author.id) in OWNER:
         await member.send(content)
-        await ctx.send(f'{member} was given sent dm with content: {content}')
+        await ctx.send(f'{member} was given dm with content: {content}')
     else:
         await ctx.send('currently, your id does NOT appear in the config!')
-
-
-@bot.command()
-async def say(ctx, *, content):
-  await ctx.message.delete()
-  await ctx.send(content)
 
 @bot.command(name='cat')
 async def cat(ctx):
@@ -164,7 +158,7 @@ async def cat(ctx):
 
     cat_image_url = data[0]['url']
 
-    await ctx.send(f'{cat_image_url}')
+    await ctx.send(f'heres your cat! {cat_image_url}')
 
 @bot.command(name="avatar")
 async def avatar(ctx, *, user: discord.Member = None):
@@ -185,24 +179,16 @@ async def banner(ctx, *, user: discord.Member = None):
     else:
         await ctx.send(f'{user.display_name} does not have a banner.')
 
-@bot.command(name="weather")
-async def weather(ctx, *, city: str):
-    if not city:
-        await ctx.send("Please specify a city")
-        return
-    url = "https://wttr.in/" + city
-    await ctx.send(url)
-
 @bot.command(name="ipinfo")
 async def ipinfo(ctx, *, ip: str):
     if not ip:
-        await ctx.send("Please specify an IP address.")
+        await ctx.send("specify a ip adress")
         return
 
     ipinfo_token = IPINFO_TOKEN
 
     if not ipinfo_token:
-        await ctx.send("IPinfo.io token not set. Please contact the bot owner.")
+        await ctx.send("ipinfo.io token not set (yet)")
         return
 
     url = f"https://ipinfo.io/{ip}?token={ipinfo_token}"
@@ -218,10 +204,10 @@ async def ipinfo(ctx, *, ip: str):
         org = data.get("org", "N/A")
         timezone = data.get("timezone", "N/A")
 
-        await ctx.send(f"IP Information for {ip}:\nCity: {city}\nRegion: {region}\nCountry: {country}\nLocation: {loc}\nOrganization: {org}\nTimezone: {timezone}\n")
+        await ctx.send(f"```ip info for {ip}:\ncity: {city}\nregion: {region}\ncountry: {country}\nlocation: {loc}\norganization: {org}\ntimezone: {timezone}\n```")
 
     except Exception as e:
-        await ctx.send(f"An error occurred while fetching IP information: {e}")
+        await ctx.send(f"error occured: {e}")
 
 @bot.command(name="playing", description="Changes the playing status of the bot")
 async def playing(ctx, *, status: str):
