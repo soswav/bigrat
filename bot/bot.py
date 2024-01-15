@@ -14,6 +14,7 @@ config = load_config('/home/sodiumpowered/Documents/rats/config.yml') # you may 
 TOKEN = config['token']
 PREFIX = config['prefix']
 OWNER = config['owner']
+IPINFO_TOKEN = config['ipinfo_token']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
@@ -147,6 +148,63 @@ async def cat(ctx):
     cat_image_url = data[0]['url']
 
     await ctx.send(f'{cat_image_url}')
+
+@bot.command(name="avatar")
+async def avatar(ctx, *, user: discord.Member = None):
+    if not user:
+        user = ctx.author
+    embed = discord.Embed()
+    embed.set_image(url=user.avatar.url)
+    await ctx.send(embed=embed)
+
+@bot.command(name="banner")
+async def banner(ctx, *, user: discord.Member = None):
+    if not user:
+        user = ctx.author
+    if hasattr(user, 'banner') and user.banner:
+        embed = discord.Embed()
+        embed.set_image(url=user.banner.url)
+        await ctx.send(embed=embed)
+    else:
+        await ctx.send(f'{user.display_name} does not have a banner.')
+
+@bot.command(name="weather")
+async def weather(ctx, *, city: str):
+    if not city:
+        await ctx.send("Please specify a city")
+        return
+    url = "https://wttr.in/" + city
+    await ctx.send(url)
+
+@bot.command(name="ipinfo")
+async def ipinfo(ctx, *, ip: str):
+    if not ip:
+        await ctx.send("Please specify an IP address.")
+        return
+
+    ipinfo_token = IPINFO_TOKEN
+
+    if not ipinfo_token:
+        await ctx.send("IPinfo.io token not set. Please contact the bot owner.")
+        return
+
+    url = f"https://ipinfo.io/{ip}?token={ipinfo_token}"
+
+    try:
+        response = requests.get(url)
+        data = response.json()
+
+        city = data.get("city", "N/A")
+        region = data.get("region", "N/A")
+        country = data.get("country", "N/A")
+        loc = data.get("loc", "N/A")
+        org = data.get("org", "N/A")
+        timezone = data.get("timezone", "N/A")
+
+        await ctx.send(f"IP Information for {ip}:\nCity: {city}\nRegion: {region}\nCountry: {country}\nLocation: {loc}\nOrganization: {org}\nTimezone: {timezone}\n")
+
+    except Exception as e:
+        await ctx.send(f"An error occurred while fetching IP information: {e}")
 
 @bot.command(name="playing", description="Changes the playing status of the bot")
 async def playing(ctx, *, status: str):
