@@ -15,6 +15,7 @@ TOKEN = config['token']
 PREFIX = config['prefix']
 OWNER = config['owner']
 IPINFO_TOKEN = config['ipinfo_token']
+ss_token = config['ss_token']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
@@ -95,13 +96,6 @@ async def ownercmds(ctx):
         await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)\ndm - dms user mentioned```')
     else:
         await ctx.send('currently, your id does NOT appear in the config!')
-
-@bot.command(aliases=["suggestcmd"], description="Suggest a command for the bot")
-async def suggestcommand(ctx, *, suggestion):
-    suggestion_channel = bot.get_channel(1196024059939524608)
-    embed = discord.Embed(title="new command suggestion!", description=suggestion, color=discord.Color.blurple())
-    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
-    await suggestion_channel.send(embed=embed)
 
 @bot.command(aliases=['ss'], description='takes a screenshot of the specified webpage.')
 async def screenshot(ctx, url: str):
