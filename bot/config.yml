@@ -1,10 +1,10 @@
 ---
-token: your token  # place your token, or the bot will NEVER be online unless you make crazy shit
+token: "your token"  # place your token, or the bot will NEVER be online unless you make crazy shit
 
-prefix: your prefix # prefix for your bot e.g: ",ping"
+prefix: "your prefix" # prefix for your bot e.g: ",ping"
 
-owner: your discord id # place you discord id here, if you want multiple do replace the entire line code there with: "owner": ["968952481281368184", "1100478181242323068"] make sure to remember the normal one
+owner: "your discord id" # place you discord id here, if you want multiple do replace your id section with: ["id one", "id two"] make sure to remember the normal one
 
-ipinfo_token: your ipinfo.io token # LEAVE NORMAL IF U DONT WANT THE ipinfo COMMAND
+ipinfo_token: "your ipinfo.io token" # LEAVE NORMAL IF U DONT WANT THE ipinfo COMMAND
 
-ss_token: your api.screenshotone.com token # # LEAVE NORMAL IF U DONT WANT THE ss COMMAND
+ss_token: "your api.screenshotone.com token" # # LEAVE NORMAL IF U DONT WANT THE ss COMMAND
