@@ -207,6 +207,22 @@ async def ipinfo(ctx, *, ip: str):
     except Exception as e:
         await ctx.send(f"An error occurred while fetching IP information: {e}")
 
+@bot.command(aliases=['ss'], description='Takes a screenshot of the specified webpage.')
+async def screenshot(ctx, url: str):
+    if not url.startswith('http://') and not url.startswith('https://'):
+        url = 'http://' + url
+
+    access_key = SS_TOKEN
+    screenshot_url = f'https://api.screenshotone.com/take?url={url}&access_key={access_key}'
+
+    try:
+        embed = discord.Embed(title='Big Rat SS', color=discord.Color.white())
+        embed.set_image(url=screenshot_url)
+        await ctx.send(embed=embed)
+
+    except Exception as e:
+        await ctx.send(f"An error occurred: {e}")
+  
 @bot.command(name="playing", description="Changes the playing status of the bot")
 async def playing(ctx, *, status: str):
     if str(ctx.author.id) in OWNER:
