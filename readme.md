@@ -1,4 +1,3 @@
-![](https://top.gg/api/widget/upvotes/1186799032899743835.svg)
 ![](https://bigrat.monster/media/bigrat.jpg)
 ## bigrat
 repository for the poorly coded discord bot, big rat
@@ -15,3 +14,5 @@ wanna *know* how to host the *bot*? go to the [wiki](https://github.com/soswav/b
 note: read the stuff with the "#" on the beginnig as they can be helpful if you're as clueless as me!
 
 another note: i'm firkcing depressed ☹️
+
+3rd note: I'm still learning python, Wawer doesn't want to teach me... Gr...
