@@ -58,4 +58,4 @@ case "$choice" in
 esac
 
 clear
-echo -e "bigrat discord bot succefully setup!" | lolcat -a
+echo -e "bigrat discord bot succefully setup!" | lolcat -a # by the way, this looks 12u4912841947197491279847821% better than the .bat script :fire:
