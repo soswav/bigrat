@@ -97,7 +97,14 @@ async def ownercmds(ctx):
     else:
         await ctx.send('currently, your id does NOT appear in the config!')
 
-@bot.command(aliases=['ss'], description='takes a screenshot of the specified webpage')
+@bot.command(aliases=["suggestcmd"], description="Suggest a command for the bot")
+async def suggestcommand(ctx, *, suggestion):
+    suggestion_channel = bot.get_channel(1196024059939524608)
+    embed = discord.Embed(title="new command suggestion!", description=suggestion, color=discord.Color.blurple())
+    embed.set_author(name=ctx.author.display_name, icon_url=ctx.author.avatar.url)
+    await suggestion_channel.send(embed=embed)
+
+@bot.command(aliases=['ss'], description='Takes a screenshot of the specified webpage.')
 async def screenshot(ctx, url: str):
 
     if not url.startswith('http://') and not url.startswith('https://'):
@@ -132,18 +139,18 @@ async def userinfo(ctx, member: discord.Member = None):
 @commands.guild_only()
 @has_permissions(manage_roles=True)
 async def grole(ctx, member: discord.Member, role: discord.Role):
-    if ctx.author.top_role <= role:
-        await ctx.send("yuo cabnot give a role higher tyhan yours!")
+     if ctx.author.top_role <= role:
+      await ctx.send(f'{member} was given role {role}')
+      await ctx.send("yuo cabnot give a role higher tyhan yours!")
+     return
+
+     if ctx.guild.me.top_role <= role:
+        await ctx.send("i cccanot giv a role equal or higher than my top role")
         return
 
-    if ctx.guild.me.top_role <= role:
-        await ctx.send("i cccanot giv a role equal or higher than my top role.")
-        return
-    
-    await member.add_roles(role)
-    
-    await ctx.send(f'{member} was given role {role}')
+     await member.add_roles(role)
 
+     await ctx.send(f'{member} was given role {role}')
 
 @bot.command()
 @commands.guild_only()
@@ -168,7 +175,7 @@ async def cat(ctx):
 
     cat_image_url = data[0]['url']
 
-    await ctx.send(f'heres your cat! {cat_image_url}')
+    await ctx.send(f'heres ur cat! {cat_image_url}')
 
 @bot.command(name="avatar")
 async def avatar(ctx, *, user: discord.Member = None):
@@ -187,7 +194,7 @@ async def banner(ctx, *, user: discord.Member = None):
         embed.set_image(url=user.banner.url)
         await ctx.send(embed=embed)
     else:
-        await ctx.send(f'{user.display_name} does not have a banner.')
+        await ctx.send(f'{user.display_name} does not have bannr')
 
 @bot.command(name="ipinfo")
 async def ipinfo(ctx, *, ip: str):
