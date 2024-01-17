@@ -132,8 +132,18 @@ async def userinfo(ctx, member: discord.Member = None):
 @commands.guild_only()
 @has_permissions(manage_roles=True)
 async def grole(ctx, member: discord.Member, role: discord.Role):
-   await member.add_roles(role)
-   await ctx.send(f'{member} was given role {role}')
+    if ctx.author.top_role <= role:
+        await ctx.send("yuo cabnot give a role higher tyhan yours!")
+        return
+
+    if ctx.guild.me.top_role <= role:
+        await ctx.send("i cccanot giv a role equal or higher than my top role.")
+        return
+    
+    await member.add_roles(role)
+    
+    await ctx.send(f'{member} was given role {role}')
+
 
 @bot.command()
 @commands.guild_only()
