@@ -8,7 +8,7 @@ REM Set the title of the console window
 title %title%
 
 
-echo Installing discord.py and requests...
+echo Installing requirements...
 pip install discord.py
 pip install requests
 pip install PyYAML
