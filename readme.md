@@ -16,3 +16,6 @@ note: read the stuff with the "#" on the beginnig as they can be helpful if you'
 another note: i'm firkcing depressed ☹️
 
 3rd note: I'm still learning python, Wawer doesn't want to teach me... Gr...
+
+### star history (pretty flat)
+[![Star History Chart](https://api.star-history.com/svg?repos=soswav/bigrat&type=Date)](https://star-history.com/#soswav/bigrat&Date)
