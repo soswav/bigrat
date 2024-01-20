@@ -31,8 +31,8 @@ def restart_bot():
 async def check(ctx):
  if str(ctx.author.id) in OWNER:
    await ctx.send("checking for updates in bot.py..")
-   await bot.change_presence(status=discord.Status.idle) # changes status to idle as a warning
-   await asyncio.sleep(3) # change the number for how much time for it to turn off
+   await bot.change_presence(status=discord.Status.idle) # sets status to idle
+   await asyncio.sleep(3) # takes three seconds to restart
    restart_bot()
  else:
     await ctx.send("currently, you do NOT have permissions!")
@@ -73,17 +73,16 @@ BASE_URL = 'https://4get.ca/api/v1/web'
 
 @bot.command(aliases=['ask'])
 async def search(ctx, *, query):
-    headers = {'X-Pass': '4GET PASS HERE'}
+    headers = {'X-Pass': '4get.ca pass goes here'}
     params = {'q': query}
     response = requests.get(BASE_URL, headers=headers, params=params)
     data = json.loads(response.text)
-    print(data)
 
     if data['status'] != 'ok':
-        await ctx.send('an errror hjas occurred: {the "pass" token in your cookies is missing or has expired!!}')
+        await ctx.send(f'error ocurred: {data["status"]}')
         return
 
-    embed = discord.Embed(title=f'results for "{query}"', color=discord.Color.blue())
+    embed = discord.Embed(title=f'results for: "{query}"', color=discord.Color.blue())
 
     if 'results' in data and len(data['results']) > 0:
         for result in data['results']:
@@ -92,7 +91,7 @@ async def search(ctx, *, query):
             url = result['url']
             embed.add_field(name=title, value=f'[{snippet}]({url})', inline=False)
     else:
-        await ctx.send('no results found lmao!!')
+        await ctx.send('no results for your query found lmao!')
 
     await ctx.send(embed=embed)
 
@@ -114,6 +113,7 @@ async def h(ctx):
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
       f'search, ask - searchs for stuff with the 4get.ca API\n'
+      f'suggestcmd - suggests a command to a channel in the official server\n'
       f'avatar - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
@@ -333,13 +333,8 @@ async def snipe(ctx):
 async def on_guild_join(guild):
    for channel in guild.text_channels:
        if channel.permissions_for(guild.me).send_messages:
-           await channel.send('thanks for inviting the biggest rat in town, for a list of commands use `,h`') # message that (should) appear once you invite it to your server
+           await channel.send('thanks for inviting the biggest rat in town! for a list of commands use `,h`') # message that (should) appear once you invite it to your server
            break
-
-@bot.event
-async def on_command_error(ctx, error):
-  if isinstance(error, commands.CommandOnCooldown):
-      await ctx.send(f'cooldown! {round(error.retry_after, 2)} seconds left') # used to be for the "global message" command, now removed as it sucked ass
 
 @bot.event
 async def on_command_error(ctx, error):
@@ -357,4 +352,6 @@ else:
 if TOKEN:
     bot.run(TOKEN)
 else:
-    print("no token added in the config.json file grrrr")
+    print("no token added in the config.json file")
+
+# all credits go to wascertified (wawa) and ahhses (soswav) | also, hi to whoever is reading this ((if will is reading this, i'm sorry for making such a shit command for searching on 4get lol))
