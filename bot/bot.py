@@ -1,6 +1,6 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
-import discord, time, asyncio, subprocess, os, json, logging, requests, yaml
+import discord, time, asyncio, subprocess, os, json, logging, requests, yaml, sys
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
@@ -15,7 +15,6 @@ TOKEN = config['token']
 PREFIX = config['prefix']
 OWNER = config['owner']
 IPINFO_TOKEN = config['ipinfo_token']
-SS_TOKEN = config['ss_token']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
@@ -25,17 +24,18 @@ bot.remove_command("help") # removes prebuilt help command
 async def ping(ctx):
    await ctx.send(f'pong! {round(bot.latency * 1000)}ms')
 
-@bot.command()
-async def credits(ctx): # PLEASE leave wawa and i in the "credits" command, if you don't want to have the command, its okay but like 😭
-  credits_msg = (
-     f'``` - credits page\n\n'
-     f'soda, dumbass and owner\n'
-     f'"i learned a bit thanks to wawer"\n'
-     f'wawa, co-owner of big rat, has made like 30%~ of the bot\n'
-     f'"you should make biggie cheese as the big rat profile pcitur" then a image of the rat mentioned```'
-  )
+def restart_bot(): 
+   os.execv(sys.executable, ['python'] + sys.argv)
 
-  await ctx.send(credits_msg)
+@bot.command(aliases=['cc', 'restart'])
+async def check(ctx):
+ if str(ctx.author.id) in OWNER:
+   await ctx.send("checking for updates in bot.py..")
+   await bot.change_presence(status=discord.Status.idle) # changes status to idle as a warning
+   await asyncio.sleep(3) # change the number for how much time for it to turn off
+   restart_bot()
+ else:
+    await ctx.send("currently, you do NOT have permissions!")
 
 @bot.command(aliases=['si'], description='displays info about server')
 @commands.guild_only()
@@ -69,50 +69,78 @@ async def serverinfo(ctx):
 async def lock(ctx):
    await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
 
+BASE_URL = 'https://4get.ca/api/v1/web'
+
+@bot.command(aliases=['ask'])
+async def search(ctx, *, query):
+    headers = {'X-Pass': '4GET PASS HERE'}
+    params = {'q': query}
+    response = requests.get(BASE_URL, headers=headers, params=params)
+    data = json.loads(response.text)
+    print(data)
+
+    if data['status'] != 'ok':
+        await ctx.send('an errror hjas occurred: {the "pass" token in your cookies is missing or has expired!!}')
+        return
+
+    embed = discord.Embed(title=f'results for "{query}"', color=discord.Color.blue())
+
+    if 'results' in data and len(data['results']) > 0:
+        for result in data['results']:
+            title = result['title']
+            snippet = result['snippet']
+            url = result['url']
+            embed.add_field(name=title, value=f'[{snippet}]({url})', inline=False)
+    else:
+        await ctx.send('no results found lmao!!')
+
+    await ctx.send(embed=embed)
+
 @bot.command(aliases=['help'])
 async def h(ctx):
   help_msg = (
       f'``` - help page\n\n'
+      f'     ownercmds, oh\n'
+      f'       owner commands page\n'
+      f'     help, h ($)\n'
+      f'       help page\n\n'
       f'ping, p - shows the bot latency\n'
-      f'say - make the bot say something\n'
       f'kk, kick - kick someone in the nuts\n'
       f'serverinfo, si - serverinfo, made by wawer\n'
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
-      f'credits - credits for commands n shit \n'
-      f'help, h - help page\n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
-      f'ownercmds, ocmd - commands list for the owner of the bot\n'
       f'lock - locks channel, requires manage_channels\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
+      f'search, ask - searchs for stuff with the 4get.ca API\n'
+      f'avatar - returns avatar of mentioned user\n'
+      f'banner - returns banner of mentioned user\n'
+      f'ipinfo - shows info from specified ip adress\n'
       f'userinfo - name explains itself```'
   )
   await ctx.send(help_msg)
 
-@bot.command()
+@bot.command(aliases=["oh"])
 async def ownercmds(ctx):
-    if str(ctx.author.id) in OWNER:
-        await ctx.send('``` - owner commands page\n\nplaying - sets status to playing, requires argument\nstreaming - sets status to streaming, requires argument\nwatching - sets status to watching, requires argument\nlistening - sets status to listeting, requires argument\nstopstatus - selfexplanatory (real)\nkill - shut downs the bot 😭 (turns into idle as warning)\ndm - dms user mentioned```')
-    else:
-        await ctx.send('currently, your id does NOT appear in the config!')
-
-@bot.command(aliases=['ss'], description='Takes a screenshot of the specified webpage.')
-async def screenshot(ctx, url: str):
-
-    if not url.startswith('http://') and not url.startswith('https://'):
-        url = 'http://' + url
-
-    access_key = SS_TOKEN
-    screenshot_url = f'https://api.screenshotone.com/take?url={url}&access_key={access_key}'
-
-    try:
-        embed = discord.Embed(title='big rat', color=discord.Color.blurple())
-        embed.set_image(url=screenshot_url)
-        await ctx.send(embed=embed)
-
-    except Exception as e:
-        await ctx.send(f"a error occurred: {e}")
+ if str(ctx.author.id) in OWNER:
+  owner = (
+      f'``` - owner commands page\n\n'
+      f'     ownercmds, oh ($)\n'
+      f'       shows this page\n\n'
+      f'streaming - sets bot status to streaming, requires argument\n'
+      f'watching - sets bot status to watching, requires argument\n'
+      f'listening - sets bot status to listeting, requires argument\n'
+      f'playing - sets bot status to playing, requires argument\n'
+      f'stopstatus - stops bot status\n'
+      f'kill - shuts down the bot, used for restarting\n'
+      f'dm - dms user mentioned, do NOT use for bad stuff!\n'
+      f'check, cc, restart - checks for changes in bot.py, restarts bot\n'
+      f'```'
+  )
+  await ctx.send(owner)
+ else:
+    await ctx.send("currently, your id does NOT appear in the config!")
 
 @bot.command()
 @commands.guild_only()
