@@ -113,7 +113,6 @@ async def h(ctx):
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
       f'search, ask - searchs for stuff with the 4get.ca API\n'
-      f'suggestcmd - suggests a command to a channel in the official server\n'
       f'avatar - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
