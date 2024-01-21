@@ -323,7 +323,7 @@ async def kill(ctx):
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
     if ctx.author.top_role <= member.top_role:
-        await ctx.send("you don't have enough perms to ban user mentioned!")
+        await ctx.send("you don't have enough perms to kick user mentioned!")
         return
 
     if member == ctx.author:
