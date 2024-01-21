@@ -7,29 +7,38 @@ NC='\033[0m'
 
 clear # clears the terminal so its more readeablle
 
-# asks if you want to install lolcat, y/n question if first install fails it will try with other package managers until it gets yours right
-read -p "do you want to install 'lolcat'? it's required for rainbow color in install (y/n):" choice
+read -p "do you have python & pip already installed? (y/n)" choice
 case "$choice" in 
  [yY]* ) 
-   echo -e "${GREEN}installing lolcat with pacman...${NC}"
-   sudo pacman -S lolcat || echo -e "${RED}didn't work, trying dnf...${NC}" && sleep 2 && sudo dnf install lolcat || echo -e "${RED}didn't work, trying apt...${NC}" && sleep 2 && sudo apt install lolcat
+   echo -e "${GREEN}alrighty!${NC}"
    ;;
  * ) 
-   echo -e "${GREEN}okay, sorry for asking!${NC}"
+   echo -e "${GREEN}installing python and pip with pacman...${NC}"
+   sudo pacman -S python python-pip || echo -e "${RED}didn't work, trying dnf...${NC}" && sleep 2 && sudo dnf install python python-pip || echo -e "${RED}didn't work, trying apt...${NC}" && sleep 2 && sudo apt install python3 python3-pip
    ;;
 esac
 
+clear
+echo -e "${GREEN}i would like to mention that you need to toggle some stuff on discord.com/developers before continuing${NC}"
+echo -e "${GREEN}go to your bot, then search for 'Privileged Gateway Intents' on the bot tab, toggle everything you see there${NC}"
+echo -e "${RED}i'm going to make you wait 10 seconds, to make sure you read all this, sorry!${NC}"
+sleep 10
+
+
 sleep 2 && clear # takes two seconds then clears
-cd ~/bigrat && echo -e "${RED}folder exists, deleting with sudo${NC}" && sudo rm -r ~/bigrat/ # checks if you already installed bigrat
+cd ~/bigrat && echo -e "${RED}folder exists, deleting with sudo${NC}" && sudo rm -r ~/bigrat/ && clear # checks if you already installed bigrat
 cd ~/
 echo -e "${GREEN}cloning git repo...${NC}"
 git clone https://github.com/soswav/bigrat.git || (echo -e "${RED}no git? trying to install with pacman...${NC}" && sudo pacman -S git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying dnf...${NC}" && sudo dnf install git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git)
 
-echo -e "${GREEN}git clone finished! sending to directory...${NC}"
+echo -e "${GREEN}generating venv with python, please wait!${NC}"
+python -m venv ~/bigrat/bot/.venv && source ~/bigrat/bot/.venv/bin/activate
+
+echo -e "${GREEN}git clone & creation of venv finished! sending to directory...${NC}"
 cd ~/bigrat # sends to directory
 
 echo -e "${GREEN}installing bot requirements with pip...${NC}" && sleep 3
-pip install discord requests PyYAML
+pip install discord requests PyYAML || echo -e "${RED}didn't work, trying with 'pip3'${NC}" && pip3 install discord requests PyYAML
 
 echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}"
 sleep 5
@@ -50,7 +59,7 @@ read -p "do you want to run the bot right now? (y/n):" choice
 case "$choice" in 
  [yY]* ) 
    echo -e "${GREEN}running bot.py...${NC}"
-   python ~/bigrat/bot/bot.py || echo -e "${RED}no python? trying to install with pacman...${NC}" && sudo pacman -S python && echo -e "${GREEEN}installed! retrying...${NC}" && python ~/bigrat/bot/bot.py || echo -e "${RED}didn't work, trying dnf...${NC}" && sleep 2 && sudo dnf install python && echo -e "${GREEEN}installed! retrying...${NC}" && python ~/bigrat/bot/bot.py || echo -e "${RED}didn't work, trying apt...${NC}" && sleep 2 && sudo apt install python && echo -e "${GREEEN}installed! retrying...${NC}" && python ~/bigrat/bot/bot.py
+   python ~/bigrat/bot/bot.py
    ;;
  * ) 
    echo -e "${GREEN}okay, later i guess...${NC}"
@@ -58,4 +67,4 @@ case "$choice" in
 esac
 
 clear
-echo -e "bigrat discord bot succefully setup!" | lolcat -a # by the way, this looks 12u4912841947197491279847821% better than the .bat script :fire:
+echo -e "${GREEN}bigrat discord bot succefully setup!${NC}" && sleep 2
