@@ -1,6 +1,6 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
-import discord, time, asyncio, subprocess, os, json, logging, requests, yaml, sys
+import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
@@ -20,6 +20,8 @@ bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
 bot.remove_command("help") # removes prebuilt help command
 
+startTime = time.time()
+
 @bot.command(aliases=['p'])
 async def ping(ctx):
    await ctx.send(f'pong! {round(bot.latency * 1000)}ms')
@@ -31,8 +33,8 @@ def restart_bot():
 async def check(ctx):
  if str(ctx.author.id) in OWNER:
    await ctx.send("checking for updates in bot.py..")
-   await bot.change_presence(status=discord.Status.idle) # sets status to idle
-   await asyncio.sleep(3) # takes three seconds to restart
+   await bot.change_presence(status=discord.Status.idle) # changes status to idle as a warning
+   await asyncio.sleep(3) # change the number for how much time for it to turn off
    restart_bot()
  else:
     await ctx.send("currently, you do NOT have permissions!")
@@ -67,13 +69,23 @@ async def serverinfo(ctx):
 @commands.guild_only()
 @commands.has_permissions(manage_channels=True)
 async def lock(ctx):
-   await ctx.channel.set_permissions(ctx.guild.default_role, send_messages=False)
+    everyone = ctx.guild.default_role
+    overwrite = discord.PermissionOverwrite()
+
+    if not ctx.channel.permissions_for(everyone).send_messages:
+        overwrite.send_messages = True
+        await ctx.channel.set_permissions(everyone, overwrite=overwrite)
+        await ctx.send("channel unlolccked!")
+    else:
+        overwrite.send_messages = False
+        await ctx.channel.set_permissions(everyone, overwrite=overwrite)
+        await ctx.send("channel LOLCJEKD!!!")
 
 BASE_URL = 'https://4get.ca/api/v1/web'
 
 @bot.command(aliases=['ask'])
 async def search(ctx, *, query):
-    headers = {'X-Pass': '4get.ca pass goes here'}
+    headers = {'X-Pass': 'c555.eoN70yvYXfVQ8VNPznOW'}
     params = {'q': query}
     response = requests.get(BASE_URL, headers=headers, params=params)
     data = json.loads(response.text)
@@ -97,8 +109,10 @@ async def search(ctx, *, query):
 
 @bot.command(aliases=['help'])
 async def h(ctx):
-  help_msg = (
-      f'``` - help page\n\n'
+ uptime = str(datetime.timedelta(seconds=int(round(time.time()-startTime))))
+ help_msg = (
+      f'```'
+      f'- help page\n\n'
       f'     ownercmds, oh\n'
       f'       owner commands page\n'
       f'     help, h ($)\n'
@@ -109,22 +123,25 @@ async def h(ctx):
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
-      f'lock - locks channel, requires manage_channels\n'
+      f'lock - locks channel, requires (manage_channels)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
       f'search, ask - searchs for stuff with the 4get.ca API\n'
       f'avatar - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
-      f'userinfo - name explains itself```'
+      f'userinfo - name explains itself\n\nuptime: {uptime}'
+      f'```'
   )
-  await ctx.send(help_msg)
+ await ctx.send(help_msg)
 
 @bot.command(aliases=["oh"])
 async def ownercmds(ctx):
  if str(ctx.author.id) in OWNER:
+  uptime = str(datetime.timedelta(seconds=int(round(time.time()-startTime))))
   owner = (
-      f'``` - owner commands page\n\n'
+      f'```'
+      f'- owner commands page\n\n'
       f'     ownercmds, oh ($)\n'
       f'       shows this page\n\n'
       f'streaming - sets bot status to streaming, requires argument\n'
@@ -134,7 +151,7 @@ async def ownercmds(ctx):
       f'stopstatus - stops bot status\n'
       f'kill - shuts down the bot, used for restarting\n'
       f'dm - dms user mentioned, do NOT use for bad stuff!\n'
-      f'check, cc, restart - checks for changes in bot.py, restarts bot\n'
+      f'check, cc, restart - checks for changes in bot.py, restarts bot\n\nuptime: {uptime}'
       f'```'
   )
   await ctx.send(owner)
@@ -297,21 +314,48 @@ async def kill(ctx):
     await bot.change_presence(status=discord.Status.idle) # changes status to idle as a warning
     await asyncio.sleep(3) # change the number for how much time for it to turn off
     await bot.close() # kills the bot!
-
   
 @bot.command(aliases=['kk'])
 @commands.guild_only()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
-   await member.kick(reason=reason)
-   await ctx.send(f"`{member}` has been kick(ed)")
+    if ctx.author.top_role <= member.top_role:
+        await ctx.send("you don't have enough perms to ban user mentioned!")
+        return
+
+    if member == ctx.author:
+        await ctx.send("you can't kick yourself, silly.")
+        return
+
+    if reason is None:
+        reason = "no reason provided by user"
+
+    try:
+        await member.kick(reason=reason)
+        await ctx.send(f"`{member}` has been kick(ed): {reason}")
+    except Exception as e:
+        await ctx.send(f"error while trying 2 kick `{member}`: {str(e)}")
 
 @bot.command(aliases=['bn'])
 @commands.guild_only()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
-   await member.ban(reason=reason)
-   await ctx.send(f"`{member}` has been ban(ned)")
+    if ctx.author.top_role <= member.top_role:
+        await ctx.send("you don't have enough perms to ban user mentioned!")
+        return
+
+    if member == ctx.author:
+        await ctx.send("you can't ban yourself, silly.")
+        return
+
+    if reason is None:
+        reason = "no reason provided by user"
+
+    try:
+        await member.ban(reason=reason)
+        await ctx.send(f"`{member}` has been ban(ned): {reason}")
+    except Exception as e:
+        await ctx.send(f"error while trying 2 ban `{member}`: {str(e)}")
 
 last_messages = {}
 
@@ -352,5 +396,3 @@ if TOKEN:
     bot.run(TOKEN)
 else:
     print("no token added in the config.json file")
-
-# all credits go to wascertified (wawa) and ahhses (soswav) | also, hi to whoever is reading this ((if will is reading this, i'm sorry for making such a shit command for searching on 4get lol))
