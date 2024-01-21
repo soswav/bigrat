@@ -206,7 +206,7 @@ async def dm(ctx, member: discord.Member, *, content):
         else:
             await ctx.send('currently, your id does NOT appear in the config!')
     except discord.Forbidden:
-        await ctx.send("currently i CANNOT send a message to {member.display_name} :sob:")
+        await ctx.send(f"currently i CANNOT send a message to {member.display_name} :sob:")
 
 @bot.command(name='cat')
 async def cat(ctx):
