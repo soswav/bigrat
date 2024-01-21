@@ -199,11 +199,14 @@ async def clear(ctx, amount: int):
 @bot.command(name="dm", description='DMs user mentioned, do NOT use for bad shit!')
 @commands.guild_only()
 async def dm(ctx, member: discord.Member, *, content):
-    if str(ctx.author.id) in OWNER:
-        await member.send(content)
-        await ctx.send(f'{member} was given dm with content: {content}')
-    else:
-        await ctx.send('currently, your id does NOT appear in the config!')
+    try:
+        if str(ctx.author.id) in OWNER:
+            await member.send(content)
+            await ctx.send(f'{member} was given dm with content: {content}')
+        else:
+            await ctx.send('currently, your id does NOT appear in the config!')
+    except discord.Forbidden:
+        await ctx.send("currently i CANNOT send a message to {member.display_name} :sob:")
 
 @bot.command(name='cat')
 async def cat(ctx):
