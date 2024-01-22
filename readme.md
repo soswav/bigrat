@@ -6,6 +6,7 @@ the bot (currently) has around 20~ commands, with a constant update shchedule be
 the bot has a [wiki](https://github.com/soswav/bigrat/wiki) for you to read (if you wanna selfhost) and should also be pretty easy to follow!
 
 found any issue in the spagethtu cocde??! open a [issue](https://github.com/soswav/bigrat/issues)!
+
 NOTE FOR WAWA: teach me python you prick
 
 ### star history (pretty flat)
