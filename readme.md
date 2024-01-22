@@ -11,4 +11,11 @@ found any issue in the spagethtu cocde??! open a [issue](https://github.com/sosw
 NOTE FOR WAWA: teach me python you prick
 
 ### star history (pretty flat)
-[![Star History Chart](https://api.star-history.com/svg?repos=soswav/bigrat&type=Date)](https://star-history.com/#soswav/bigrat&Date)
+<a href="https://star-history.com/#soswav/bigrat&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=soswav/bigrat&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=soswav/bigrat&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=soswav/bigrat&type=Date" />
+  </picture>
+</a>
+
