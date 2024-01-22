@@ -4,6 +4,10 @@ import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter
 
+# WEB SERVER #
+# from webserver import start_webserver
+# start_webserver()
+
 def load_config(file_path):
  with open(file_path, 'r') as config_file:
    config = yaml.safe_load(config_file)
