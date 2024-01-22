@@ -1,21 +1,12 @@
-![](https://bigrat.monster/media/bigrat.jpg)
 ## bigrat
-repository for the poorly coded discord bot, big rat
+![](https://bigrat.monster/media/bigrat.jpg)
+repo for the cool discord bot, "big rat" (based from the picture of [bigrat.monster](https://bigrat.monster)!) coded by `wascertified` & `soswav`!
+the bot (currently) has around 20~ commands, with a constant update shchedule because we are bored (i'm still learning python, silly wawa...)
 
-the bot currently has like 13 commands? i don't know
-you can probably fork this thing and enhance it (like a lot)
+the bot has a [wiki](https://github.com/soswav/bigrat/wiki) for you to read (if you wanna selfhost) and should also be pretty easy to follow!
 
-im still trying to find ideas for commands but [SOMEONE](https://github.com/wascertified/) keeps adding commands!!!! (i'm jelaoalous, i also don't really have ideas)
-
-wanna *know* how to host the *bot*? go to the [wiki](https://github.com/soswav/bigrat/wiki)!
-
-[wascertified](https://github.com/wascertified/) is the co-owner!!! thank yu so much dude!
-
-note: read the stuff with the "#" on the beginnig as they can be helpful if you're as clueless as me!
-
-another note: i'm firkcing depressed ☹️
-
-3rd note: I'm still learning python, Wawer doesn't want to teach me... Gr...
+found any issue in the spagethtu cocde??! open a [issue](https://github.com/soswav/bigrat/issues)!
+NOTE FOR WAWA: teach me python you prick
 
 ### star history (pretty flat)
 [![Star History Chart](https://api.star-history.com/svg?repos=soswav/bigrat&type=Date)](https://star-history.com/#soswav/bigrat&Date)
