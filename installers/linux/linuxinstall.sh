@@ -32,7 +32,7 @@ echo -e "${GREEN}cloning git repo...${NC}"
 git clone https://github.com/soswav/bigrat.git || (echo -e "${RED}no git? trying to install with pacman...${NC}" && sudo pacman -S git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying dnf...${NC}" && sudo dnf install git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git) || (echo -e "${RED}didn't work, trying apt...${NC}" && sudo apt install git && echo -e "${GREEN}installed! retrying...${NC}" && git clone https://github.com/soswav/bigrat.git)
 
 echo -e "${GREEN}generating venv with python, please wait!${NC}"
-python -m venv ~/bigrat/bot/.venv && source ~/bigrat/bot/.venv/bin/activate
+python -m venv ~/bigrat/.venv && source ~/bigrat/.venv/bin/activate
 
 echo -e "${GREEN}git clone & creation of venv finished! sending to directory...${NC}"
 cd ~/bigrat # sends to directory
@@ -42,13 +42,13 @@ pip install discord requests PyYAML || echo -e "${RED}didn't work, trying with '
 
 echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}"
 sleep 5
-nano ~/bigrat/bot/config.yml # text editor for terminals
+nano ~/bigrat/config.yml # text editor for terminals
 
 read -p "do you want to check the bot.py file? (y/n)" choice
 case "$choice" in 
  [yY]* ) 
    echo -e "${GREEN}editing bot.py with nano...${NC}"
-   nano ~/bigrat/bot/bot.py
+   nano ~/bigrat/bot.py
    ;;
  * ) 
    echo -e "${GREEN}alright, skipping...${NC}"
@@ -59,7 +59,7 @@ read -p "do you want to run the bot right now? (y/n):" choice
 case "$choice" in 
  [yY]* ) 
    echo -e "${GREEN}running bot.py...${NC}"
-   python ~/bigrat/bot/bot.py
+   python ~/bigrat/bot.py
    ;;
  * ) 
    echo -e "${GREEN}okay, later i guess...${NC}"
