@@ -21,7 +21,7 @@ esac
 clear
 echo -e "${GREEN}i would like to mention that you need to toggle some stuff on discord.com/developers before continuing${NC}"
 echo -e "${GREEN}go to your bot, then search for 'Privileged Gateway Intents' on the bot tab, toggle everything you see there${NC}"
-echo -e "${RED}i'm going to make you wait 10 seconds, to make sure you read all this, sorry!${NC}"
+echo -e "${RED}i'm going to make you wait 10 seconds to make sure you read all this, sorry!${NC}"
 sleep 10
 
 
