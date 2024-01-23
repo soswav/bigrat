@@ -19,5 +19,5 @@ NOTE FOR WAWA: teach me python you prick
   </picture>
 </a>
 
-go check out small cat too! https://github.com/wascertified/Small-Cat
+go check out small cat too! https://github.com/wascertified/small-cat
 
