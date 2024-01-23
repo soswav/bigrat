@@ -1,19 +1,15 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
-import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime
+import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, subprocess
 from discord.ext import commands
-from discord.ext.commands import has_permissions, TextChannelConverter
-
-# WEB SERVER #
-# from webserver import start_webserver
-# start_webserver()
+from discord.ext.commands import has_permissions, TextChannelConverter, CommandNotFound
 
 def load_config(file_path):
  with open(file_path, 'r') as config_file:
    config = yaml.safe_load(config_file)
  return config
 
-config = load_config('config.yml') # you may need to change "config.yml" to the path of your yml file
+config = load_config('/home/sodiumpowered/Documents/rats/config.yml') # you may need to change "config.yml" to the path of your yml file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -85,32 +81,6 @@ async def lock(ctx):
         await ctx.channel.set_permissions(everyone, overwrite=overwrite)
         await ctx.send("channel LOLCJEKD!!!")
 
-BASE_URL = 'https://4get.ca/api/v1/web'
-
-@bot.command(aliases=['ask'])
-async def search(ctx, *, query):
-    headers = {'X-Pass': 'c555.eoN70yvYXfVQ8VNPznOW'}
-    params = {'q': query}
-    response = requests.get(BASE_URL, headers=headers, params=params)
-    data = json.loads(response.text)
-
-    if data['status'] != 'ok':
-        await ctx.send(f'error ocurred: {data["status"]}')
-        return
-
-    embed = discord.Embed(title=f'results for: "{query}"', color=discord.Color.blue())
-
-    if 'results' in data and len(data['results']) > 0:
-        for result in data['results']:
-            title = result['title']
-            snippet = result['snippet']
-            url = result['url']
-            embed.add_field(name=title, value=f'[{snippet}]({url})', inline=False)
-    else:
-        await ctx.send('no results for your query found lmao!')
-
-    await ctx.send(embed=embed)
-
 @bot.command(aliases=['help'])
 async def h(ctx):
  uptime = str(datetime.timedelta(seconds=int(round(time.time()-startTime))))
@@ -130,7 +100,7 @@ async def h(ctx):
       f'lock - locks channel, requires (manage_channels)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
-      f'search, ask - searchs for stuff with the 4get.ca API\n'
+      f'suggestcmd - suggests a command to a channel in the official server\n'
       f'avatar - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
@@ -148,11 +118,7 @@ async def ownercmds(ctx):
       f'- owner commands page\n\n'
       f'     ownercmds, oh ($)\n'
       f'       shows this page\n\n'
-      f'streaming - sets bot status to streaming, requires argument\n'
-      f'watching - sets bot status to watching, requires argument\n'
-      f'listening - sets bot status to listeting, requires argument\n'
-      f'playing - sets bot status to playing, requires argument\n'
-      f'stopstatus - stops bot status\n'
+      f'status - requires arguments, e.g: status [streaming, watching, playing, listening, stop] [status_text]\n'
       f'kill - shuts down the bot, used for restarting\n'
       f'dm - dms user mentioned, do NOT use for bad stuff!\n'
       f'check, cc, restart - checks for changes in bot.py, restarts bot\n\nuptime: {uptime}'
@@ -270,45 +236,21 @@ async def ipinfo(ctx, *, ip: str):
     except Exception as e:
         await ctx.send(f"error occured: {e}")
 
-@bot.command(name="playing", description="Changes the playing status of the bot")
-async def playing(ctx, *, status: str):
-    if str(ctx.author.id) in OWNER:
-        await bot.change_presence(activity=discord.Game(name=f"{status}"))
-        await ctx.send("set the playing status to " + status)
+@bot.command()
+async def status(ctx, status_type, *, status_text):
+ if str(ctx.author.id) in OWNER:
+    if status_type.lower() == "playing":
+        await bot.change_presence(activity=discord.Game(name=status_text))
+    elif status_type.lower() == "streaming":
+        await bot.change_presence(activity=discord.Streaming(name=status_text, url="https://twitch.tv/settings"))
+    elif status_type.lower() == "listening":
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=status_text))
+    elif status_type.lower() == "watching":
+        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status_text))
+    elif status_type.lower() == "stop":
+        await bot.change_presence(activity=None)
     else:
-        await ctx.send("currently, your id does NOT appear in the config!")
-
-@bot.command(name="streaming", description="Changes the streaming status of the bot")
-async def streaming(ctx, *, status: str):
-    if str(ctx.author.id) in OWNER:
-        await bot.change_presence(activity=discord.Streaming(name=f"{status}", url="https://www.twitch.tv/settings"))
-        await ctx.send("set th streaming status to " + status)
-    else:
-        await ctx.send("currently, your id does NOT appear in the config!")
-
-@bot.command(name="listening", description="Changes the listening status of the bot")
-async def listening(ctx, *, status: str):
-    if str(ctx.author.id) in OWNER:
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{status}"))
-        await ctx.send("set th listening status to " + status)
-    else:
-        await ctx.send("currently, your id does NOT appear in the config!")
-
-@bot.command(name="watching", description="Changes the watching status of the bot")
-async def watching(ctx, *, status: str):
-    if str(ctx.author.id) in OWNER:
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=f"{status}"))
-        await ctx.send("set th watching status to " + status)
-    else:
-        await ctx.send("currently, your id does NOT appear in the config!")
-
-@bot.command(name="stopstatus", description="Stops the status")
-async def stopstatus(ctx):
-    if str(ctx.author.id) in OWNER:
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.playing, name=""))
-        await ctx.send("stopped the status lol!")
-    else:
-        await ctx.send("currently, your id does NOT appear in the config!")
+        await ctx.send("invalid status type bruv!")
 
 @bot.command()
 async def kill(ctx):
@@ -326,12 +268,12 @@ async def kill(ctx):
 @commands.guild_only()
 @commands.has_permissions(kick_members=True)
 async def kick(ctx, member: discord.Member, *, reason=None):
-    if ctx.author.top_role <= member.top_role:
-        await ctx.send("you don't have enough perms to kick user mentioned!")
-        return
-
     if member == ctx.author:
         await ctx.send("you can't kick yourself, silly.")
+        return
+
+    if ctx.author.top_role <= member.top_role:
+        await ctx.send("you don't have enough perms to kick user mentioned!")
         return
 
     if reason is None:
@@ -389,6 +331,13 @@ async def on_guild_join(guild):
 @bot.event
 async def on_command_error(ctx, error):
     logging.exception("exception errored during command! lol:", exc_info=error)
+
+@bot.event
+async def on_command_error(ctx, error):
+    if isinstance(error, CommandNotFound):
+        await ctx.send("that command doesn't exist, silly!")
+    else:
+        raise error
 
 @bot.event
 async def on_ready():
