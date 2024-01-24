@@ -1,6 +1,7 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
-# normally u can install them by running "linuxinstall.sh"
-import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, subprocess
+# normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
+import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, random
+from googletrans import Translator
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter, CommandNotFound
 
@@ -38,6 +39,18 @@ async def check(ctx):
    restart_bot()
  else:
     await ctx.send("currently, you do NOT have permissions!")
+
+translator = Translator()
+
+@bot.command()
+async def badtranslate(ctx, *, text):
+    target_language = random.choice(['afrikaans', 'albanian', 'amharic', 'arabic', 'armenian', 'azerbaijani', 'basque', 'belarusian', 'bengali', 'bosnian', 'bulgarian', 'catalan', 'cebuano', 'chichewa', 'chinese (simplified)', 'chinese (traditional)', 'corsican', 'croatian', 'czech', 'danish', 'dutch', 'english', 'esperanto', 'estonian', 'filipino', 'finnish', 'french', 'frisian', 'galician', 'georgian', 'german', 'greek', 'gujarati', 'haitian creole', 'hausa', 'hawaiian', 'hebrew', 'hindi', 'hmong', 'hungarian', 'icelandic', 'igbo', 'indonesian', 'irish', 'italian', 'japanese', 'javanese', 'kannada', 'kazakh', 'khmer', 'korean', 'kurdish', 'kyrgyz', 'lao', 'latin', 'latvian', 'lithuanian', 'luxembourgish', 'macedonian', 'malagasy', 'malay', 'malayalam', 'maltese', 'maori', 'marathi', 'mongolian', 'myanmar (burmese)', 'nepali', 'norwegian', 'pashto', 'persian', 'polish', 'portuguese', 'punjabi', 'romanian', 'russian', 'samoan', 'scots gaelic', 'serbian', 'sesotho', 'shona', 'sindhi', 'sinhalese', 'slovak', 'slovenian', 'somali', 'spanish', 'sundanese', 'swahili', 'swedish', 'tajik', 'tamil', 'telugu', 'thai', 'turkish', 'ukrainian', 'urdu', 'uzbek', 'vietnamese', 'welsh', 'xhosa', 'yiddish', 'yoruba', 'zulu'])
+
+    translated = translator.translate(text, dest=target_language)
+
+    bad_translated = translator.translate(translated.text, dest='english')
+
+    await ctx.send(f"result: `{bad_translated.text}`")
 
 @bot.command(aliases=['si'], description='displays info about server')
 @commands.guild_only()
@@ -104,6 +117,7 @@ async def h(ctx):
       f'avatar - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
+      f'''badtranslate - bad translate, tribute to Assyst's badtranslate cmd\n''' 
       f'userinfo - name explains itself\n\nuptime: {uptime}'
       f'```'
   )
@@ -118,7 +132,7 @@ async def ownercmds(ctx):
       f'- owner commands page\n\n'
       f'     ownercmds, oh ($)\n'
       f'       shows this page\n\n'
-      f'status - use "status usg" to see how its used\n'
+      f'status - use ",status" to see how its used\n'
       f'kill - shuts down the bot, used for restarting\n'
       f'dm - dms user mentioned, do NOT use for bad stuff!\n'
       f'check, cc, restart - checks for changes in bot.py, restarts bot\n\nuptime: {uptime}'
@@ -137,7 +151,7 @@ async def quickremove(ctx):
         await referenced_message.delete()
         await ctx.send(f'deleted replied msg', delete_after=3)
     else:
-        await ctx.send(f'you didnt reply to anything!', delete_after=5)
+        await ctx.send(f'you didnt mention anyone, silly!', delete_after=5)
 
 @quickremove.error
 async def quickremove_error(ctx, error):
@@ -192,7 +206,7 @@ async def dm(ctx, member: discord.Member, *, content):
         else:
             await ctx.send('currently, your id does NOT appear in the config!')
     except discord.Forbidden:
-        await ctx.send(f"i CANNOT send a message to {member.display_name} :sob:")
+        await ctx.send(f"currently i CANNOT send a message to {member.display_name} :sob:")
 
 @bot.command(name='cat')
 async def cat(ctx):
@@ -253,7 +267,11 @@ async def ipinfo(ctx, *, ip: str):
         await ctx.send(f"error occured: {e}")
 
 @bot.command()
-async def status(ctx, status_type, status_text=None):
+async def status(ctx, status_type=None, status_text=None):
+    if status_type is None:
+        await ctx.send("""```err: no status specified!\n\nusage: \n\nstatus (playing|streaming|watching|listening|stop) (arguement)```""")
+        return
+
     if str(ctx.author.id) in OWNER:
         if status_type.lower() == "playing":
             await bot.change_presence(activity=discord.Game(name=status_text))
@@ -270,10 +288,8 @@ async def status(ctx, status_type, status_text=None):
         elif status_type.lower() == "stop":
             await bot.change_presence(activity=None)
             await ctx.send("actikskvity cleared!!")
-        elif status_type.lower() == "usg":
-            await ctx.send("""```     - usage: \n\nstatus (playing|streaming|watching|listening|stop|usg) (arguement)\n\n     - stop and usg do NOT require arguments```""")
         else:
-            await ctx.send("invalid status type bruv!")
+            await ctx.send("""```err: status doesn't exist!\n\nusage: \n\nstatus (playing|streaming|watching|listening|stop) (arguement)```""")
     if str(ctx.author.id) not in OWNER:
         await ctx.send("you don't have permissions to use this command!")
 
@@ -336,16 +352,18 @@ last_messages = {}
 
 @bot.event
 async def on_message_delete(message):
- last_messages[message.channel.id] = {'content': message.content, 'author': message.author.name} # logs message deleted, not shared on terminal
+    if message.channel.id not in last_messages:
+        last_messages[message.channel.id] = []
+    last_messages[message.channel.id].append({'content': message.content, 'author': message.author.name})
 
 @bot.command(aliases=['s'])
 @commands.guild_only()
-async def snipe(ctx):
- if ctx.channel.id in last_messages:
-     last_message = last_messages[ctx.channel.id]
-     await ctx.send(f' `{last_message["author"]}` said: "{last_message["content"]}"')
- else:
-     await ctx.send('no msgs to snipe (yet)')
+async def snipe(ctx, index: int = 1):
+    if ctx.channel.id in last_messages and len(last_messages[ctx.channel.id]) >= index:
+        last_message = last_messages[ctx.channel.id][index - 1]
+        await ctx.send(f'`{last_message["author"]}` said: "{last_message["content"]}"')
+    else:
+        await ctx.send('no msgs to snipe (yet)')
 
 @bot.event
 async def on_guild_join(guild):
