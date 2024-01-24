@@ -1,4 +1,4 @@
-# stuff the bot needs to run, you may need to install the dependencies with pip
+# stuff the bot needs to run, you may need to install the dependencies with pip ( use pip install discord requests PyYAML googletrans==4.0.0-rc1 )
 # normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
 import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, random
 from googletrans import Translator
