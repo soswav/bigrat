@@ -1,5 +1,5 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip
-# normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
+# normally u can install them by running "linuxinstall.sh"
 import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, subprocess
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter, CommandNotFound
@@ -9,7 +9,7 @@ def load_config(file_path):
    config = yaml.safe_load(config_file)
  return config
 
-config = load_config('/home/sodiumpowered/Documents/rats/config.yml') # you may need to change "config.yml" to the path of your yml file
+config = load_config('config.yml') # you may need to change "config.yml" to the path of your yml file
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -96,11 +96,11 @@ async def h(ctx):
       f'serverinfo, si - serverinfo, made by wawer\n'
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
+      f'quickremove, qr - deletes replied message (requires manage_messages)\n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
-      f'lock - locks channel, requires (manage_channels)\n'
+      f'lock - locks channel (requires manage_channels)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
-      f'suggestcmd - suggests a command to a channel in the official server\n'
       f'avatar - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
@@ -118,7 +118,7 @@ async def ownercmds(ctx):
       f'- owner commands page\n\n'
       f'     ownercmds, oh ($)\n'
       f'       shows this page\n\n'
-      f'status - requires arguments, e.g: status [streaming, watching, playing, listening, stop] [status_text]\n'
+      f'status - use "status usg" to see how its used\n'
       f'kill - shuts down the bot, used for restarting\n'
       f'dm - dms user mentioned, do NOT use for bad stuff!\n'
       f'check, cc, restart - checks for changes in bot.py, restarts bot\n\nuptime: {uptime}'
@@ -127,6 +127,22 @@ async def ownercmds(ctx):
   await ctx.send(owner)
  else:
     await ctx.send("currently, your id does NOT appear in the config!")
+
+@bot.command(aliases=["qr"])
+@commands.guild_only()
+@has_permissions(manage_messages=True)
+async def quickremove(ctx):
+    if ctx.message.reference is not None:
+        referenced_message = await ctx.channel.fetch_message(ctx.message.reference.message_id)
+        await referenced_message.delete()
+        await ctx.send(f'deleted replied msg', delete_after=3)
+    else:
+        await ctx.send(f'you didnt reply to anything!', delete_after=5)
+
+@quickremove.error
+async def quickremove_error(ctx, error):
+    if isinstance(error, commands.MissingPermissions):
+        await ctx.send("Silly, you're missing the manage_messages permission!")
 
 @bot.command()
 @commands.guild_only()
@@ -176,7 +192,7 @@ async def dm(ctx, member: discord.Member, *, content):
         else:
             await ctx.send('currently, your id does NOT appear in the config!')
     except discord.Forbidden:
-        await ctx.send(f"currently i CANNOT send a message to {member.display_name} :sob:")
+        await ctx.send(f"i CANNOT send a message to {member.display_name} :sob:")
 
 @bot.command(name='cat')
 async def cat(ctx):
@@ -237,20 +253,29 @@ async def ipinfo(ctx, *, ip: str):
         await ctx.send(f"error occured: {e}")
 
 @bot.command()
-async def status(ctx, status_type, *, status_text):
- if str(ctx.author.id) in OWNER:
-    if status_type.lower() == "playing":
-        await bot.change_presence(activity=discord.Game(name=status_text))
-    elif status_type.lower() == "streaming":
-        await bot.change_presence(activity=discord.Streaming(name=status_text, url="https://twitch.tv/settings"))
-    elif status_type.lower() == "listening":
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=status_text))
-    elif status_type.lower() == "watching":
-        await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status_text))
-    elif status_type.lower() == "stop":
-        await bot.change_presence(activity=None)
-    else:
-        await ctx.send("invalid status type bruv!")
+async def status(ctx, status_type, status_text=None):
+    if str(ctx.author.id) in OWNER:
+        if status_type.lower() == "playing":
+            await bot.change_presence(activity=discord.Game(name=status_text))
+            await ctx.send(f"activity upd to `playing {status_text}`")
+        elif status_type.lower() == "streaming":
+            await bot.change_presence(activity=discord.Streaming(name=status_text, url="https://twitch.tv/settings"))
+            await ctx.send(f"activity upd to `streaming {status_text}`")
+        elif status_type.lower() == "listening":
+            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=status_text))
+            await ctx.send(f"activity upd to `listening to {status_text}`")
+        elif status_type.lower() == "watching":
+            await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status_text))
+            await ctx.send(f"activity upd to `watching {status_text}`")
+        elif status_type.lower() == "stop":
+            await bot.change_presence(activity=None)
+            await ctx.send("actikskvity cleared!!")
+        elif status_type.lower() == "usg":
+            await ctx.send("""```     - usage: \n\nstatus (playing|streaming|watching|listening|stop|usg) (arguement)\n\n     - stop and usg do NOT require arguments```""")
+        else:
+            await ctx.send("invalid status type bruv!")
+    if str(ctx.author.id) not in OWNER:
+        await ctx.send("you don't have permissions to use this command!")
 
 @bot.command()
 async def kill(ctx):
@@ -289,12 +314,13 @@ async def kick(ctx, member: discord.Member, *, reason=None):
 @commands.guild_only()
 @commands.has_permissions(ban_members=True)
 async def ban(ctx, member: discord.Member, *, reason=None):
-    if ctx.author.top_role <= member.top_role:
-        await ctx.send("you don't have enough perms to ban user mentioned!")
-        return
 
     if member == ctx.author:
         await ctx.send("you can't ban yourself, silly.")
+        return
+
+    if ctx.author.top_role <= member.top_role:
+        await ctx.send("you don't have enough perms to ban user mentioned!")
         return
 
     if reason is None:
