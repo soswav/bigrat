@@ -24,6 +24,7 @@ go check out small cat too! https://github.com/wascertified/small-cat
 if the owners of the bigrat.monster ever see this, please contact me like RN
 
 the rat is the only thing in my head currently, if i see a rat or mice i just go "oh that reminds me of the picture of bigrat.monster"
-i'm going insane.
+
+i'm going insane
 
 `soswav@skiff.com` <- contact for the owner of bigrat (the website AND whoever took the picture)
