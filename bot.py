@@ -50,7 +50,7 @@ async def badtranslate(ctx, *, text):
 
     bad_translated = translator.translate(translated.text, dest='english')
 
-    await ctx.send(f"result: `{bad_translated.text}`")
+    await ctx.send(f"`output:` {bad_translated.text}")
 
 @bot.command(aliases=['si'], description='displays info about server')
 @commands.guild_only()
