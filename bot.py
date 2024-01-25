@@ -1,5 +1,4 @@
 # stuff the bot needs to run, you may need to install the dependencies with pip ( use pip install discord requests PyYAML googletrans==4.0.0-rc1 )
-# normally u can install them by running installer.bat if ur on windows, for linux use "linuxinstall.sh"
 import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, random
 from googletrans import Translator
 from discord.ext import commands
@@ -44,13 +43,19 @@ translator = Translator()
 
 @bot.command()
 async def badtranslate(ctx, *, text):
+    max_length = 500 # change to whatever you want
+
+    if len(text) > max_length:
+        await ctx.send(f"text too long! max chars are `{max_length}`!")
+        return
+
     target_language = random.choice(['afrikaans', 'albanian', 'amharic', 'arabic', 'armenian', 'azerbaijani', 'basque', 'belarusian', 'bengali', 'bosnian', 'bulgarian', 'catalan', 'cebuano', 'chichewa', 'chinese (simplified)', 'chinese (traditional)', 'corsican', 'croatian', 'czech', 'danish', 'dutch', 'english', 'esperanto', 'estonian', 'filipino', 'finnish', 'french', 'frisian', 'galician', 'georgian', 'german', 'greek', 'gujarati', 'haitian creole', 'hausa', 'hawaiian', 'hebrew', 'hindi', 'hmong', 'hungarian', 'icelandic', 'igbo', 'indonesian', 'irish', 'italian', 'japanese', 'javanese', 'kannada', 'kazakh', 'khmer', 'korean', 'kurdish', 'kyrgyz', 'lao', 'latin', 'latvian', 'lithuanian', 'luxembourgish', 'macedonian', 'malagasy', 'malay', 'malayalam', 'maltese', 'maori', 'marathi', 'mongolian', 'myanmar (burmese)', 'nepali', 'norwegian', 'pashto', 'persian', 'polish', 'portuguese', 'punjabi', 'romanian', 'russian', 'samoan', 'scots gaelic', 'serbian', 'sesotho', 'shona', 'sindhi', 'sinhalese', 'slovak', 'slovenian', 'somali', 'spanish', 'sundanese', 'swahili', 'swedish', 'tajik', 'tamil', 'telugu', 'thai', 'turkish', 'ukrainian', 'urdu', 'uzbek', 'vietnamese', 'welsh', 'xhosa', 'yiddish', 'yoruba', 'zulu'])
 
     translated = translator.translate(text, dest=target_language)
 
     bad_translated = translator.translate(translated.text, dest='english')
 
-    await ctx.send(f"output: {bad_translated.text}")
+    await ctx.send(f"`output:`\n{bad_translated.text}")
 
 @bot.command(aliases=['si'], description='displays info about server')
 @commands.guild_only()
@@ -141,7 +146,7 @@ async def ownercmds(ctx):
   await ctx.send(owner)
  else:
     await ctx.send("currently, your id does NOT appear in the config!")
-
+  
 @bot.command(aliases=["qr"])
 @commands.guild_only()
 @has_permissions(manage_messages=True)
@@ -267,7 +272,7 @@ async def ipinfo(ctx, *, ip: str):
         await ctx.send(f"error occured: {e}")
 
 @bot.command()
-async def status(ctx, status_type=None, status_text=None):
+async def status(ctx, status_type=None, *, status_text=None):
     if status_type is None:
         await ctx.send("""```err: no status specified!\n\nusage: \n\nstatus (playing|streaming|watching|listening|stop) (arguement)```""")
         return
