@@ -1,6 +1,5 @@
-# stuff the bot needs to run, you may need to install the dependencies with pip ( use pip install discord requests PyYAML googletrans==4.0.0-rc1 )
-import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime, random
-from googletrans import Translator
+# stuff the bot needs to run, you may need to install the dependencies with pip ( pip install discord requests PyYAML )
+import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter, CommandNotFound
 
@@ -38,24 +37,6 @@ async def check(ctx):
    restart_bot()
  else:
     await ctx.send("currently, you do NOT have permissions!")
-
-translator = Translator()
-
-@bot.command()
-async def badtranslate(ctx, *, text):
-    max_length = 500 # change to whatever you want
-
-    if len(text) > max_length:
-        await ctx.send(f"text too long! max chars are `{max_length}`!")
-        return
-
-    target_language = random.choice(['afrikaans', 'albanian', 'amharic', 'arabic', 'armenian', 'azerbaijani', 'basque', 'belarusian', 'bengali', 'bosnian', 'bulgarian', 'catalan', 'cebuano', 'chichewa', 'chinese (simplified)', 'chinese (traditional)', 'corsican', 'croatian', 'czech', 'danish', 'dutch', 'english', 'esperanto', 'estonian', 'filipino', 'finnish', 'french', 'frisian', 'galician', 'georgian', 'german', 'greek', 'gujarati', 'haitian creole', 'hausa', 'hawaiian', 'hebrew', 'hindi', 'hmong', 'hungarian', 'icelandic', 'igbo', 'indonesian', 'irish', 'italian', 'japanese', 'javanese', 'kannada', 'kazakh', 'khmer', 'korean', 'kurdish', 'kyrgyz', 'lao', 'latin', 'latvian', 'lithuanian', 'luxembourgish', 'macedonian', 'malagasy', 'malay', 'malayalam', 'maltese', 'maori', 'marathi', 'mongolian', 'myanmar (burmese)', 'nepali', 'norwegian', 'pashto', 'persian', 'polish', 'portuguese', 'punjabi', 'romanian', 'russian', 'samoan', 'scots gaelic', 'serbian', 'sesotho', 'shona', 'sindhi', 'sinhalese', 'slovak', 'slovenian', 'somali', 'spanish', 'sundanese', 'swahili', 'swedish', 'tajik', 'tamil', 'telugu', 'thai', 'turkish', 'ukrainian', 'urdu', 'uzbek', 'vietnamese', 'welsh', 'xhosa', 'yiddish', 'yoruba', 'zulu'])
-
-    translated = translator.translate(text, dest=target_language)
-
-    bad_translated = translator.translate(translated.text, dest='english')
-
-    await ctx.send(f"`output:`\n{bad_translated.text}")
 
 @bot.command(aliases=['si'], description='displays info about server')
 @commands.guild_only()
@@ -114,7 +95,6 @@ async def h(ctx):
       f'serverinfo, si - serverinfo, made by wawer\n'
       f'bn, ban - ban someone in the head\n'
       f'snipe, s - snipes last deleted message\n'
-      f'quickremove, qr - deletes replied message (requires manage_messages)\n'
       f'grole - givs a role to specified user (requires manage_roles)\n'
       f'lock - locks channel (requires manage_channels)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
@@ -146,22 +126,6 @@ async def ownercmds(ctx):
   await ctx.send(owner)
  else:
     await ctx.send("currently, your id does NOT appear in the config!")
-  
-@bot.command(aliases=["qr"])
-@commands.guild_only()
-@has_permissions(manage_messages=True)
-async def quickremove(ctx):
-    if ctx.message.reference is not None:
-        referenced_message = await ctx.channel.fetch_message(ctx.message.reference.message_id)
-        await referenced_message.delete()
-        await ctx.send(f'deleted replied msg', delete_after=3)
-    else:
-        await ctx.send(f'you didnt mention anyone, silly!', delete_after=5)
-
-@quickremove.error
-async def quickremove_error(ctx, error):
-    if isinstance(error, commands.MissingPermissions):
-        await ctx.send("Silly, you're missing the manage_messages permission!")
 
 @bot.command()
 @commands.guild_only()
