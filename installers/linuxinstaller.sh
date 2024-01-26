@@ -38,7 +38,7 @@ echo -e "${GREEN}git clone & creation of venv finished! sending to directory...$
 cd ~/bigrat # sends to directory
 
 echo -e "${GREEN}installing bot requirements with pip...${NC}" && sleep 3
-pip install discord requests PyYAML googletrans==4.0.0-rc1 || echo -e "${RED}didn't work, trying with 'pip3'${NC}" && pip3 install discord requests PyYAML
+pip install discord requests PyYAML || echo -e "${RED}didn't work, trying with 'pip3'${NC}" && pip3 install discord requests PyYAML
 
 echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}"
 sleep 5
