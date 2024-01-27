@@ -1,3 +1,4 @@
-fucking test video [here](https://i.ayaya.beauty/CzrF.mp4)
+# installers folder
+Basically, this folder is for saving the installer for whatever you're using. `Wawa` is the one that mantains the `.bat` files, while I mantain the `.sh` files.
 
-i'm testing this stuff to add gifs in the future, so yall understand better (duh)
+Open an issue if the scripts don't work or you found an improvement/fix/issue. Thanks in the future, I guess.

@@ -3,6 +3,8 @@ token: your token  # place your token, or the bot will NEVER be online unless yo
 
 prefix: "your prefix" # prefix for your bot e.g: ","
 
-owner: your discord id # place you discord id here for having multiple just place a "," then another id and so on
+owner: your discord id # place you discord id here (if you want multiple just add a "," then your other id and boom
 
 ipinfo_token: your ipinfo.io token # don't change if you don't want the ipinfo command
+
+#i may add a search command soon, so watch out for that!
