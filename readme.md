@@ -16,3 +16,4 @@ found any issue in the spagethtu cocde??! open a [issue](https://github.com/sosw
     <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=soswav/bigrat&type=Date" />
   </picture>
 </a>
+(please star the repo)
