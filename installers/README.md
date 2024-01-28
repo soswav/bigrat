@@ -9,8 +9,8 @@ Open an issue if the scripts don't work or you found an improvement/fix/issue. T
 First, go to where you downloaded the file then run:
 
 ```bash
-wget https://github.com/soswav/bigrat/releases/download/release/linuxinstaller.sh
 cd $HOME
+wget https://github.com/soswav/bigrat/releases/download/release/linuxinstaller.sh
 chmod +x $HOME/linuxinstaller.sh
 ./linuxinstaller.sh
 ```
