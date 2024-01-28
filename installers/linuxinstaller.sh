@@ -64,10 +64,10 @@ activate_venv() {
 
     if [ ! -d "$env_name" ]; then
         echo -e "${RED}virtual environment '$env_name' not found! creating one...${NC}"
-        python -m venv $env_name
+        python -m venv "$env_name"
     fi
 
-    source $env_name/bin/activate
+    source "$env_name"/bin/activate
 }
 # leaving funcion zone so early?
 
@@ -86,7 +86,7 @@ while true; do
     esac
 done
 
-sleep 3; clear
+sleep 3;clear
 # this is something you should actually read, pal!
 echo -e "${GREEN}i would like to mention that you need to toggle some stuff on discord.com/developers before continuing"
 echo -e "${GREEN}go to your bot, then search for 'Privileged Gateway Intents' on the bot tab, toggle everything you see there"
@@ -94,21 +94,21 @@ echo -e "${RED}i'm going to make you wait 10 seconds to make sure you read all t
 
 
 clear # clears the terminal for better reability!
-cd ~/bigrat && echo -e "${RED}folder exists, deleting with sudo${NC}"; sudo rm -r ~/bigrat/ # checks if you already installed bigrat
-sleep 1; clear; cd ~/ # makes sure you read that, smh!
+cd "$HOME/bigrat" && echo -e "${RED}folder exists, deleting with sudo${NC}";rm -r -f "$HOME/bigrat/" # checks if you already installed bigrat
+sleep 1; clear;cd "$HOME" || exit # makes sure you read that, smh!
 echo -e "${GREEN}cloning git repo...${NC}"; git clone https://github.com/soswav/bigrat.git || GITFail # notifies user that it's going to clone the repo, if it fails it runs the GITFail function
 clear
 
-echo -e "${GREEN}generating a venv with python...${NC}";activate_venv "~/bigrat/.venv";sleep 3;clear
+echo -e "${GREEN}generating a venv with python...${NC}";activate_venv "$HOME/bigrat/.venv";sleep 3;clear
 echo -e "${GREEN}installing bot requirements with pip...${NC}";sleep 3;REQ
-echo -e "${GREEN}git clone, requirements installation and creation of venv finished! sending to directory...${NC}";cd ~/bigrat;sleep 2 # You can guess, bucko!
-clear;echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}";sleep 5;nano ~/bigrat/config.yml # editor
+echo -e "${GREEN}git clone, requirements installation and creation of venv finished! sending to directory...${NC}";"cd $HOME/bigrat";sleep 2 # You can guess, bucko!
+clear;echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}";sleep 5;nano "$HOME/bigrat/config.yml" # editor
 
 while true; do
     read -p "do you want to edit the bot.py file? (y/n)" choice
     case "$choice" in 
      [yY]* ) 
-       echo -e "${GREEN}editing bot.py with nano...${NC}";sleep 1;nano ~/bigrat/bot.py
+       echo -e "${GREEN}editing bot.py with nano...${NC}";sleep 1;nano "$HOME/bigrat/bot.py"
        break
        ;;
      [nN]* )
@@ -122,7 +122,7 @@ while true; do
     read -p "do you want to run the bot right now? (y/n)" choice
     case "$choice" in 
      [yY]* ) 
-       echo -e "${GREEN}running bot.py...${NC}";sleep 1;python ~/bigrat/bot.py;sleep 2
+       echo -e "${GREEN}running bot.py...${NC}";sleep 1;python "$HOME/bigrat/bot.py";sleep 2
        break
        ;;
      [nN]* )
