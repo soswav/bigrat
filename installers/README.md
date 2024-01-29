@@ -17,8 +17,6 @@ chmod +x $HOME/linuxinstaller.sh
 
 The command above will give the file permission of being ran through your terminal.
 
-**NOTE:** Please **read** as it will ask and do stuff that you **may not want.** *(You can view the file [here](https://github.com/soswav/bigrat/blob/main/installers/linuxinstaller.sh).)*
+**NOTE:** Please **read** the file as it will ask and do stuff that you **may not want.** *(You can view the file [here](https://github.com/soswav/bigrat/blob/main/installers/linuxinstaller.sh).)*
 
-If you have no clue of what you're doing whatsoever I personally recommend going to the [wiki](https://github.com/soswav/bigrat/wiki).
-
-**NOTE:** The wiki is currently outdated *(or simply unaccurate)* and may be moved to a `README.md` file.
+If you don't trust us with our installers, go to the [wiki]([https://github.com/soswav/bigrat/wiki](https://github.com/soswav/bigrat/wiki/Manual-Installation-Proccess)https://github.com/soswav/bigrat/wiki/Manual-Installation-Proccess) and follow the instructions for you system.
