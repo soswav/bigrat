@@ -6,6 +6,8 @@ Open an issue if the scripts don't work or you found an improvement/fix/issue. T
 
 ## Installing via linuxinstaller.sh
 
+![cool logo](https://i.imgur.com/KuEvQi8.png)
+
 Run this on your terminal:
 
 ```bash
