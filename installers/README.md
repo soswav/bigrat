@@ -6,7 +6,7 @@ Open an issue if the scripts don't work or you found an improvement/fix/issue. T
 
 ## Installing via linuxinstaller.sh
 
-First, go to where you downloaded the file then run:
+Run this on your terminal:
 
 ```bash
 cd $HOME
