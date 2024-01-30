@@ -16,14 +16,3 @@ found any issue in the spagethtu cocde??! open a [issue](https://github.com/sosw
     <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=soswav/bigrat&type=Date" />
   </picture>
 </a>
-
-<details>
-<summary>what's the bot using?</summary>
-
-| Rank | Languages |
-|-----:|-----------|
-|     1| Python    |
-|     2| Bash      |
-|     3| Batchfile |
-
-</details>
