@@ -1,5 +1,5 @@
-# stuff the bot needs to run, you may need to install the dependencies with pip ( pip install discord requests PyYAML )
-import discord, time, asyncio, os, json, logging, requests, yaml, sys, datetime
+# stuff the bot needs to run, you may need to install the dependencies with pip ( pip install discord requests PyYAML asyncio )
+import discord, time, asyncio, os, json, logging, requests, yaml, sys
 from discord.ext import commands
 from discord.ext.commands import has_permissions, TextChannelConverter, CommandNotFound
 
@@ -8,7 +8,14 @@ def load_config(file_path):
    config = yaml.safe_load(config_file)
  return config
 
-config = load_config('config.yml') # you may need to change "config.yml" to the path of your yml file
+# you may need to change "config.yml" to the path of your yml file
+# if you don't want to edit it, just go to the directory with "cd" and run "python bot.py" though, that will be tedious
+config = load_config('config.yml')
+
+#this feels souless
+#what did i do?
+#why does it feel so dead?
+#i fucking hate myself
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -17,9 +24,8 @@ IPINFO_TOKEN = config['ipinfo_token']
 
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
-bot.remove_command("help") # removes prebuilt help command
 
-startTime = time.time()
+bot.remove_command("help") # removes prebuilt help command
 
 @bot.command(aliases=['p'])
 async def ping(ctx):
@@ -28,8 +34,8 @@ async def ping(ctx):
 def restart_bot(): 
    os.execv(sys.executable, ['python'] + sys.argv)
 
-@bot.command(aliases=['cc', 'restart'])
-async def check(ctx):
+@bot.command(aliases=['res'])
+async def restart(ctx):
  if str(ctx.author.id) in OWNER:
    await ctx.send("checking for updates in bot.py..")
    await bot.change_presence(status=discord.Status.idle) # changes status to idle as a warning
@@ -82,7 +88,6 @@ async def lock(ctx):
 
 @bot.command(aliases=['help'])
 async def h(ctx):
- uptime = str(datetime.timedelta(seconds=int(round(time.time()-startTime))))
  help_msg = (
       f'```'
       f'- help page\n\n'
@@ -99,11 +104,10 @@ async def h(ctx):
       f'lock - locks channel (requires manage_channels)\n'
       f'clear - deletes specified number of messages (requires manage_messages)\n'
       f'cat - sends cat pic for u\n'
-      f'avatar - returns avatar of mentioned user\n'
+      f'avatar, av - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
-      f'''badtranslate - bad translate, tribute to Assyst's badtranslate cmd\n''' 
-      f'userinfo - name explains itself\n\nuptime: {uptime}'
+      f'userinfo, ui, usrinfo - name explains itself'
       f'```'
   )
  await ctx.send(help_msg)
@@ -111,23 +115,22 @@ async def h(ctx):
 @bot.command(aliases=["oh"])
 async def ownercmds(ctx):
  if str(ctx.author.id) in OWNER:
-  uptime = str(datetime.timedelta(seconds=int(round(time.time()-startTime))))
   owner = (
       f'```'
       f'- owner commands page\n\n'
       f'     ownercmds, oh ($)\n'
       f'       shows this page\n\n'
       f'status - use ",status" to see how its used\n'
-      f'kill - shuts down the bot, used for restarting\n'
+      f'kill - shuts down the bot\n'
       f'dm - dms user mentioned, do NOT use for bad stuff!\n'
-      f'check, cc, restart - checks for changes in bot.py, restarts bot\n\nuptime: {uptime}'
+      f'restart - checks for changes in bot.py, restarts bot'
       f'```'
   )
   await ctx.send(owner)
  else:
     await ctx.send("currently, your id does NOT appear in the config!")
 
-@bot.command()
+@bot.command(aliases=['usrinfo', 'ui'])
 @commands.guild_only()
 async def userinfo(ctx, member: discord.Member = None):
   if not member:
@@ -186,7 +189,7 @@ async def cat(ctx):
 
     await ctx.send(f'heres ur cat! {cat_image_url}')
 
-@bot.command(name="avatar")
+@bot.command(aliases=['av'])
 async def avatar(ctx, *, user: discord.Member = None):
     if not user:
         user = ctx.author
@@ -194,7 +197,7 @@ async def avatar(ctx, *, user: discord.Member = None):
     embed.set_image(url=user.avatar.url)
     await ctx.send(embed=embed)
 
-@bot.command(name="banner")
+@bot.command()
 async def banner(ctx, *, user: discord.Member = None):
     if not user:
         user = ctx.author
@@ -238,7 +241,7 @@ async def ipinfo(ctx, *, ip: str):
 @bot.command()
 async def status(ctx, status_type=None, *, status_text=None):
     if status_type is None:
-        await ctx.send("""```err: no status specified!\n\nusage: \n\nstatus (playing|streaming|watching|listening|stop) (arguement)```""")
+        await ctx.send("""```err: no status specified!\n\nusage: \n\nstatus (playing|streaming|watching|listening|clear) (arguement)```""")
         return
 
     if str(ctx.author.id) in OWNER:
@@ -254,17 +257,16 @@ async def status(ctx, status_type=None, *, status_text=None):
         elif status_type.lower() == "watching":
             await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.watching, name=status_text))
             await ctx.send(f"activity upd to `watching {status_text}`")
-        elif status_type.lower() == "stop":
+        elif status_type.lower() == "clear":
             await bot.change_presence(activity=None)
             await ctx.send("actikskvity cleared!!")
         else:
-            await ctx.send("""```err: status doesn't exist!\n\nusage: \n\nstatus (playing|streaming|watching|listening|stop) (arguement)```""")
+            await ctx.send("""```err: status doesn't exist!\n\nusage: \n\nstatus (playing|streaming|watching|listening|clear) (arguement)```""")
     if str(ctx.author.id) not in OWNER:
         await ctx.send("you don't have permissions to use this command!")
 
 @bot.command()
 async def kill(ctx):
-    """Shuts down the bot with a 3-second delay if the author is the owner."""
     if str(ctx.author.id) not in OWNER:
         await ctx.send("currently, your id does NOT appear in the config!")
         return
