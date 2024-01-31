@@ -1,6 +1,6 @@
 # Installers Folder
 
-Basically, this folder is for saving the installer for whatever you're using. `Wawa` is the one that mantains the `.bat` file, while I maintain the `.sh` files.
+Basically, this folder is for saving the installer for whatever you're using. `Wawa` is the one that maintains the `.bat` file, while I maintain the `.sh` files.
 
 Open an issue if the scripts don't work or you find an improvement, fix, or issue. Thanks in the future, I guess.
 
