@@ -1,8 +1,8 @@
 # Installers Folder
 
-Basically, this folder is for saving the installer for whatever you're using. `Wawa` is the one that mantains the `.bat` files, while I mantain the `.sh` files.
+Basically, this folder is for saving the installer for whatever you're using. `Wawa` is the one that mantains the `.bat` file, while I maintain the `.sh` files.
 
-Open an issue if the scripts don't work or you found an improvement/fix/issue. Thanks in the future, I guess.
+Open an issue if the scripts don't work or you find an improvement, fix, or issue. Thanks in the future, I guess.
 
 ## Installing via linuxinstaller.sh
 
@@ -17,8 +17,9 @@ chmod +x $HOME/linuxinstaller.sh
 ./linuxinstaller.sh
 ```
 
-The command above will give the file permission of being ran through your terminal.
+The command above will give the file permission to be run through your terminal.
 
-**NOTE:** Please **read** the file as it will ask and do stuff that you **may not want.** *(You can view the file [here](https://github.com/soswav/bigrat/blob/main/installers/linuxinstaller.sh).)*
+> [!NOTE]
+> Please **read** the file, as it will do stuff that you **may not want.** *(You can preview the file [here](https://github.com/soswav/bigrat/blob/main/installers/linuxinstaller.sh).)*
 
-If you don't trust us with our installers, go to the [wiki]([https://github.com/soswav/bigrat/wiki](https://github.com/soswav/bigrat/wiki/Manual-Installation-Proccess)https://github.com/soswav/bigrat/wiki/Manual-Installation-Proccess) and follow the instructions for you system.
+If you don't trust us with our installers, go to the [wiki]([https://github.com/soswav/bigrat/wiki](https://github.com/soswav/bigrat/wiki/Manual-Installation-Proccess)https://github.com/soswav/bigrat/wiki/Manual-Installation-Proccess) and follow the instructions for your system.
