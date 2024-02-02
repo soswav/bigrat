@@ -9,13 +9,7 @@ def load_config(file_path):
  return config
 
 # you may need to change "config.yml" to the path of your yml file
-# if you don't want to edit it, just go to the directory with "cd" and run "python bot.py" though, that will be tedious
 config = load_config('config.yml')
-
-#this feels souless
-#what did i do?
-#why does it feel so dead?
-#i fucking hate myself
 
 TOKEN = config['token']
 PREFIX = config['prefix']
@@ -25,11 +19,12 @@ IPINFO_TOKEN = config['ipinfo_token']
 bot = commands.Bot(command_prefix=PREFIX, case_insensitive=False,
                    intents=discord.Intents.all())
 
-bot.remove_command("help") # removes prebuilt help command
+# removes prebuilt help command
+bot.remove_command("help") 
 
 @bot.command(aliases=['p'])
 async def ping(ctx):
-   await ctx.send(f'pong! {round(bot.latency * 1000)}ms')
+   await ctx.send(f'ping pong ponger! we currently have {round(bot.latency * 1000)}ms!')
 
 def restart_bot(): 
    os.execv(sys.executable, ['python'] + sys.argv)
@@ -107,7 +102,7 @@ async def h(ctx):
       f'avatar, av - returns avatar of mentioned user\n'
       f'banner - returns banner of mentioned user\n'
       f'ipinfo - shows info from specified ip adress\n'
-      f'userinfo, ui, usrinfo - name explains itself'
+      f'userinfo, ui, usrinfo - name explains itself\n'
       f'```'
   )
  await ctx.send(help_msg)
@@ -123,7 +118,7 @@ async def ownercmds(ctx):
       f'status - use ",status" to see how its used\n'
       f'kill - shuts down the bot\n'
       f'dm - dms user mentioned, do NOT use for bad stuff!\n'
-      f'restart - checks for changes in bot.py, restarts bot'
+      f'restart - checks for changes in bot.py, restarts bot\n\nNOTE:\nthere are aliases for the owner commands, find them!'
       f'```'
   )
   await ctx.send(owner)
@@ -267,6 +262,7 @@ async def status(ctx, status_type=None, *, status_text=None):
 
 @bot.command()
 async def kill(ctx):
+    """Shuts down the bot with a 3-second delay if the author is the owner."""
     if str(ctx.author.id) not in OWNER:
         await ctx.send("currently, your id does NOT appear in the config!")
         return
@@ -340,7 +336,8 @@ async def snipe(ctx, index: int = 1):
 async def on_guild_join(guild):
    for channel in guild.text_channels:
        if channel.permissions_for(guild.me).send_messages:
-           await channel.send('thanks for inviting the biggest rat in town! for a list of commands use `,h`') # message that (should) appear once you invite it to your server
+           await channel.send('thanks for inviting the biggest rat in town! for a list of commands use `¿h`') # message that (should) appear once you invite it to your server
+
            break
 
 @bot.event
