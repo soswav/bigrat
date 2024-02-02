@@ -3,10 +3,10 @@
 # colors for text, needed for actually reading the text lol
 RED='\033[0;31m' 
 GREEN='\033[0;32m'
-ASCII='\033[1;33m' # it's yellow
+ASCII='\033[1;33m' # it's yellowish!
 NC='\033[0m'
 
-# functions go down here, just learned these thanks to Phind.
+# functions go down here, just learned these thanks to Phind!
 PYInstall() { # installs python and pip, what else did you expect?
     if command -v pacman > /dev/null; then
         echo -e "${GREEN}installing python and pip with pacman...${NC}"; sleep 3
@@ -43,7 +43,7 @@ GITFail() { # if the clone command doesn't work, it will run this
 
 REQ() {
    if command -v pip > /dev/null; then
-        echo -e "${GREEN}pip is already installed, installing dependencies!${NC}";pip install discord requests PyYAML asyncio
+        echo -e "${GREEN}installing dependencies for the bot...${NC}";pip install discord requests PyYAML asyncio
    else
        if command -v pacman > /dev/null; then
             echo -e "${RED}you don't have pip! trying to install with pacman...${NC}"; sleep 3
@@ -72,7 +72,7 @@ activate_venv() {
 }
 
 ascii(){
-    echo -e "${ASCII}
+    clear;echo -e "${ASCII}
                                                                                                                powered by soswav
   ██╗     ██╗███╗   ██╗██╗   ██╗██╗  ██╗██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     ███████╗██████╗    ███████╗██╗  ██╗
   ██║     ██║████╗  ██║██║   ██║╚██╗██╔╝██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     ██╔════╝██╔══██╗   ██╔════╝██║  ██║
@@ -85,7 +85,7 @@ ascii(){
 }
 # leaving funcion zone so early?
 
-clear;ascii;sleep 3 # clears the terminal so its more readeable
+ascii;sleep 3 # clears the terminal so its more readeable
 while true; do
     read -p "do you have python & pip already installed? (y/n)" choice
     case "$choice" in 
@@ -100,23 +100,20 @@ while true; do
     esac
 done
 
-sleep 3;clear;ascii
-# this is something you should actually read, pal!
-echo -e "${GREEN}i would like to mention that you need to toggle some stuff on discord.com/developers before continuing"
-echo -e "${GREEN}go to your bot, then search for 'Privileged Gateway Intents' on the bot tab, toggle everything you see there"
-echo -e "${RED}i'm going to make you wait 10 seconds to make sure you read all this, sorry!${NC}"; sleep 10
+sleep 3;ascii
+echo -e "${RED}NOTE: you should read the wiki as it contains info on what the bot needs! 
+i'm going to make you wait 10 seconds to make sure you read this, sorry!${NC}";sleep 10
 
 
-clear;ascii # clears the terminal for better reability!
-cd "$HOME/bigrat" && echo -e "${RED}folder exists, deleting...${NC}";rm -r -f "$HOME/bigrat/" # checks if you already installed bigrat
-sleep 1; clear;ascii;cd "$HOME" || exit # makes sure you read that, smh!
-echo -e "${GREEN}cloning git repo...${NC}"; git clone https://github.com/soswav/bigrat.git || GITFail # notifies user that it's going to clone the repo, if it fails it runs the GITFail function
-clear;ascii
+ascii
+cd "$HOME/bigrat" && echo -e "${RED}folder exists, deleting...${NC}";rm -rf "$HOME/bigrat/" # checks and deletes for bigrat folder
+sleep 1;ascii;cd "$HOME" || exit # makes sure you read
+echo -e "${GREEN}cloning git repo...${NC}";git clone https://github.com/soswav/bigrat.git || GITFail # notifies user that it's going to clone the repo, if it fails it runs the GITFail function
+ascii
 
-echo -e "${GREEN}generating a venv with python...${NC}";activate_venv "$HOME/bigrat/.venv";sleep 3;clear
-echo -e "${GREEN}installing bot requirements with pip...${NC}";sleep 3;REQ
-echo -e "${GREEN}git clone, requirements installation and creation of venv finished! sending to directory...${NC}";"cd $HOME/bigrat";sleep 2 # You can guess, bucko!
-clear;ascii;echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}";sleep 5;nano "$HOME/bigrat/config.yml" # editor
+echo -e "${GREEN}generating a venv with python...${NC}";activate_venv "$HOME/bigrat/.venv";sleep 3;REQ;sleep 3
+echo -e "${GREEN}git clone, installation of pip packages and creation of venv finished! sending to directory...${NC}";cd "$HOME/bigrat";sleep 2
+ascii;echo -e "${GREEN}opening config.yml for edit in 5 secs, make sure to fill the spots...${NC}";sleep 5;nano "$HOME/bigrat/config.yml" # editor
 
 while true; do
     read -p "do you want to edit the bot.py file? (y/n)" choice
@@ -146,4 +143,4 @@ while true; do
     esac
 done
 
-clear;ascii;echo -e "${GREEN}bigrat discord bot succefully setup! (probably!)${NC}";sleep 5
+ascii;echo -e "${GREEN}bigrat discord bot succefully setup! (probably!)${NC}";sleep 3
