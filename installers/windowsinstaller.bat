@@ -30,11 +30,7 @@ setx path "%path%;C:\Program Files\Git\cmd" /M
 
 echo Installation of Git complete.
 
-echo Cloning the repository bigrat by soswav...
-git clone https://github.com/soswav/bigrat
-
-echo Installing discord.py and other essentials...
-pip install discord.py pyyaml requests
-
-echo Done.
+echo Open git CMD and do git clone https://github.com/soswav/bigrat
+echo Download requirments by doing:
+echo pip install discord.py pyyaml requests asyncio
 pause
