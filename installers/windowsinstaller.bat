@@ -1,5 +1,5 @@
 @echo off
-set "python_version=3.10.0"
+set "python_version=3.12.1"
 set "url=https://www.python.org/ftp/python/%python_version%/python-%python_version%-amd64.exe"
 set "installer=python-%python_version%-amd64.exe"
 set "targetdir=C:\Python%python_version%"
