@@ -33,4 +33,5 @@ echo Installation of Git complete.
 echo Open git CMD and do git clone https://github.com/soswav/bigrat
 echo Download requirments by doing:
 echo pip install discord.py pyyaml requests asyncio
+echo If it tells u that pip isnt a thing, download it from the microsoft store!
 pause
