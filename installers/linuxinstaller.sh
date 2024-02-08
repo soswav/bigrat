@@ -18,7 +18,7 @@ PYInstall() { # installs python and pip, what else did you expect?
         echo -e "${GREEN}installing python and pip with apt...${NC}"; sleep 3
         sudo apt install python3 python3-pip
     else
-        echo -e "${RED}you don't have pacman, apt or apt!!! what are you using???!! (just install python manually!!!)${NC}"
+        echo -e "${RED}you don't have pacman, apt or dnf!!! what are you using???!! (just install python manually!!!)${NC}"
     fi
 }
 
