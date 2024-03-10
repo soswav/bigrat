@@ -1,6 +1,0 @@
----
-token: "your bot token"  # place your bot token, or the bot will NEVER be online unless you do crazy stuff!
-prefix: "your prefix" # prefix for your bot
-owner: "your discord id" # place you discord id here for having multiple just place a "," then another id and so on
-ipinfo_token: "your ipinfo.io token" # don't change if you don't want the ipinfo command to work
-
