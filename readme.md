@@ -21,3 +21,8 @@ the old bot used to have **these** commands:
 5. `serverinfo` & `userinfo` - self-explanatory
 6. `lock`
 7. and others i forgot...
+
+
+owner message:
+
+learning bash really did help me understand code! the fuck???
