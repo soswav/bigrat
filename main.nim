@@ -11,9 +11,9 @@ proc onReady(s: Shard, r: Ready) {.event(discord).} =
 
 proc messageCreate(s: Shard, m: Message) {.event(discord).} =
   if m.content == prefix & "about":  # if the message content is ">_about" then:
-    discard await discord.api.sendMessage(m.channel_id, "```\nthis bot was coded with nim 👑!\nthis bot used to be coded with python, i discontinued it cuz i rlly wanted to learn something that isn't python!\ni'm also currently learning nim 👑, so expect errors!\n\ncurrent commands:\nprefix = \",\"\nping  - shows response time\nabout - this page\nhelp  - shows commands\n```")
+    discard await discord.api.sendMessage(m.channel_id, "```\nthis bot was coded with nim 👑!\nthis bot used to be coded with python, i discontinued it cuz i rlly wanted to learn something that isn't python!\ni'm also currently learning nim 👑, so expect errors!\n\ncurrent commands:\nprefix = \"" & prefix & "\"\nping  - shows response time\nabout - this page\nhelp  - shows commands\n```")
   elif m.content == prefix & "help": # if the message content is ">_help" then:
-    discard await discord.api.sendMessage(m.channel_id, "```\ncurrent commands:\nprefix = \",\"\nping  - shows response time\nabout - general information\nhelp  - this page\n```")
+    discard await discord.api.sendMessage(m.channel_id, "```\ncurrent commands:\nprefix = \"" & prefix & "\"\nping  - shows response time\nabout - general information\nhelp  - this page\n```")
   elif m.content == prefix & "ping": # if the message content is ">_ping" then:
     let
         before = epochTime() * 1000
